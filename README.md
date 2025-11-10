@@ -1,4 +1,4 @@
-## Hi there 👋
+## 👋 Hey everyone, I'm Ethan 👋
 
 <!--
 **ethan0xbuilds/ethan0xbuilds** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
@@ -14,3 +14,7 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+![Those fries on the pier are the purpose of life](https://i.redd.it/hdixx3zijja81.jpg)
+
+👋 Hello everyone! I'm a software development engineer passionate about open source. For the past five years, I've been building Web 2.0 infrastructure in the traditional cloud computing industry, and now I've transitioned to the Web 3.0 industry, developing smart contracts. After learning about Ethereum's vision and history, I was deeply drawn to it, and I look forward to joining this technological revolution, contributing my skills to create a decentralized universe. 🌌
