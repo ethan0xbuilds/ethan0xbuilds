@@ -1,4 +1,4 @@
-## 👋 Hey everyone, I'm Ethan 👋
+# 👋 Hey everyone, I'm Ethan 👋
 
 <!--
 **ethan0xbuilds/ethan0xbuilds** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
