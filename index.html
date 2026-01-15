@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethan | 0x以太 - Web3 Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a3e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #16a085;
+            --light: #eaeaea;
+            --text: #333;
+            --text-light: #666;
+            --border: #ddd;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #0f1419;
+                --secondary: #1a2332;
+                --accent: #1e3a5f;
+                --highlight: #16a085;
+                --light: #f5f5f5;
+                --text: #e0e0e0;
+                --text-light: #a0a0a0;
+                --border: #333;
+            }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .container {
+                background: rgba(15, 20, 25, 0.95);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--highlight) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(22, 160, 133, 0.3);
+            overflow: hidden;
+            border: 3px solid var(--highlight);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .title {
+            font-size: 16px;
+            color: var(--highlight);
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .lang-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--highlight);
+            background: transparent;
+            color: var(--highlight);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background: var(--highlight);
+            color: white;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Bio Section */
+        .bio {
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        .bio p {
+            margin-bottom: 12px;
+        }
+
+        /* Social Links Section */
+        .social-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(22, 160, 133, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--highlight);
+        }
+
+        .social-section h3 {
+            font-size: 14px;
+            color: var(--highlight);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .social-links {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .social-link {
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .social-link:hover {
+            border-color: var(--highlight);
+            color: var(--highlight);
+            transform: translateX(4px);
+        }
+
+        .social-icon {
+            font-size: 18px;
+        }
+
+        /* Content Placeholders */
+        .content-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .content-section {
+                background: rgba(255, 255, 255, 0.03);
+            }
+        }
+
+        .content-section h3 {
+            font-size: 14px;
+            color: var(--highlight);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .placeholder {
+            color: var(--text-light);
+            font-size: 13px;
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .lang-toggle {
+                top: 20px;
+                right: 20px;
+            }
+
+            .name {
+                font-size: 24px;
+            }
+
+            .header {
+                margin-bottom: 25px;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="avatar">
+                <img src="https://pbs.twimg.com/profile_images/1987916893689356288/nwM6W79S_400x400.jpg" alt="Ethan" />
+            </div>
+            <h1 class="name">Ethan | 0x以太</h1>
+            <div class="title" data-i18n="title">Engineer 🧑‍💻</div>
+        </div>
+
+        <!-- Bio Section -->
+        <div class="bio">
+            <p data-i18n="bio">云 → Web3转行中 | 写代码 / 修bug / 求不被rug | 欢迎交流 & 远程机会</p>
+        </div>
+
+        <!-- Social Links Section -->
+        <div class="social-section">
+            <h3 data-i18n="connect">Connect</h3>
+            <div class="social-links">
+                <a href="https://x.com/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <span class="social-icon">𝕏</span>
+                    <span>X / Twitter</span>
+                </a>
+                <a href="https://t.me/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <span class="social-icon">✈️</span>
+                    <span>Telegram</span>
+                </a>
+                <a href="https://discord.com/users/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <span class="social-icon">💬</span>
+                    <span>Discord</span>
+                </a>
+                <a href="https://linktr.ee/ethan0x" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <span class="social-icon">🔗</span>
+                    <span data-i18n="linktree">Linktree</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Content Placeholders -->
+        <!-- Projects Section Placeholder -->
+        <div class="content-section">
+            <h3 data-i18n="projects">Featured Projects</h3>
+            <div class="placeholder" data-i18n="projects-placeholder">Coming soon - showcase your best work and contributions</div>
+        </div>
+
+        <!-- Articles Section Placeholder -->
+        <div class="content-section">
+            <h3 data-i18n="articles">Articles & Insights</h3>
+            <div class="placeholder" data-i18n="articles-placeholder">Coming soon - share your thoughts on Web3, blockchain, and technology</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p data-i18n="footer">© 2026 Ethan. Deployed on www.oasaka.xyz</p>
+        </div>
+    </div>
+
+    <script>
+        // Internationalization Data
+        const translations = {
+            en: {
+                title: 'Engineer 🧑‍💻',
+                bio: 'Cloud → Web3 transition | Writing code / Fixing bugs / Avoiding rugs | Open to collaboration & remote opportunities',
+                connect: 'Connect',
+                linktree: 'Linktree',
+                projects: 'Featured Projects',
+                'projects-placeholder': 'Coming soon - showcase your best work and contributions',
+                articles: 'Articles & Insights',
+                'articles-placeholder': 'Coming soon - share your thoughts on Web3, blockchain, and technology',
+                footer: '© 2026 Ethan. Deployed on www.oasaka.xyz'
+            },
+            zh: {
+                title: '工程师 🧑‍💻',
+                bio: '云 → Web3转行中 | 写代码 / 修bug / 求不被rug | 欢迎交流 & 远程机会',
+                connect: '联系方式',
+                linktree: 'Linktree',
+                projects: '精选项目',
+                'projects-placeholder': '敬请期待 - 展示你最出色的作品和贡献',
+                articles: '文章与见解',
+                'articles-placeholder': '敬请期待 - 分享你对 Web3、区块链和技术的思考',
+                footer: '© 2026 Ethan。部署在 www.oasaka.xyz'
+            }
+        };
+
+        // Language switching
+        const langButtons = document.querySelectorAll('[data-lang]');
+        const i18nElements = document.querySelectorAll('[data-i18n]');
+
+        function setLanguage(lang) {
+            // Update button states
+            langButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update page language
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+            // Update content
+            i18nElements.forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Save preference
+            localStorage.setItem('language', lang);
+        }
+
+        // Event listeners
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setLanguage(btn.dataset.lang);
+            });
+        });
+
+        // Load saved language preference
+        const savedLang = localStorage.getItem('language') || 'en';
+        setLanguage(savedLang);
+    </script>
+</body>
+</html>
