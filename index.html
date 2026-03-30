@@ -80,23 +80,6 @@ body {
     gap: 16px;
 }
 
-:root {
-    --highlight: #16a085;
-    --text: #333;
-    --text-light: #666;
-    --border: #ddd;
-    --accent: #0f3460;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --highlight: #16a085;
-        --text: #e0e0e0;
-        --text-light: #a0a0a0;
-        --border: #333;
-        --accent: #1e3a5f;
-    }
-}
 
         /* Focus states */
         a:focus-visible, button:focus-visible {
@@ -194,11 +177,6 @@ body {
             text-align: center;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .social-link {
-                background: rgba(255, 255, 255, 0.05);
-            }
-        }
 
         .social-link:hover {
             border-color: var(--highlight);
@@ -245,11 +223,6 @@ body {
             border-radius: 12px;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .content-section {
-                background: rgba(255, 255, 255, 0.03);
-            }
-        }
 
         .content-section h3 {
             font-size: 12px;
@@ -274,11 +247,6 @@ body {
             transition: all 0.2s ease;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .project-card {
-                background: rgba(255, 255, 255, 0.05);
-            }
-        }
 
         .project-card:hover {
             border-color: var(--highlight);
