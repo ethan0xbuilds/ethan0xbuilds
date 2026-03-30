@@ -15,81 +15,88 @@
     <meta name="twitter:description" content="某不知名程序员" />
     <meta name="twitter:image" content="https://www.oasaka.xyz/avatar.png" />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        :root {
-            --primary: #1a1a3e;
-            --secondary: #16213e;
-            --accent: #0f3460;
-            --highlight: #16a085;
-            --light: #eaeaea;
-            --text: #333;
-            --text-light: #666;
-            --border: #ddd;
-        }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #a18cd1 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+}
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --primary: #0f1419;
-                --secondary: #1a2332;
-                --accent: #1e3a5f;
-                --highlight: #16a085;
-                --light: #f5f5f5;
-                --text: #e0e0e0;
-                --text-light: #a0a0a0;
-                --border: #333;
-            }
-        }
+/* Decorative orbs */
+.orb {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
 
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
+.orb-1 {
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 150, 120, 0.4);
+    filter: blur(80px);
+    top: -80px;
+    left: -80px;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            transition: background 0.3s ease;
-        }
+.orb-2 {
+    width: 250px;
+    height: 250px;
+    background: rgba(180, 130, 220, 0.4);
+    filter: blur(90px);
+    bottom: -60px;
+    right: -60px;
+}
 
-        .container {
-            max-width: 600px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px 32px;
-            animation: slideUp 0.6s ease-out;
-        }
+.orb-3 {
+    width: 200px;
+    height: 200px;
+    background: rgba(254, 180, 220, 0.3);
+    filter: blur(100px);
+    top: 50%;
+    left: 60%;
+}
 
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(15, 20, 25, 0.95);
-            }
-        }
+.page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+:root {
+    --highlight: #16a085;
+    --text: #333;
+    --text-light: #666;
+    --border: #ddd;
+    --accent: #0f3460;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --highlight: #16a085;
+        --text: #e0e0e0;
+        --text-light: #a0a0a0;
+        --border: #333;
+        --accent: #1e3a5f;
+    }
+}
 
         /* Focus states */
         a:focus-visible, button:focus-visible {
@@ -204,6 +211,32 @@
             font-size: 18px;
         }
 
+        /* Resume Button */
+        .resume-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            background: transparent;
+            border: 1.5px solid var(--highlight);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--highlight);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .resume-btn:hover {
+            background: var(--highlight);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(22, 160, 133, 0.3);
+        }
+
         /* Content Section */
         .content-section {
             margin-bottom: 24px;
@@ -286,10 +319,6 @@
 
         /* Responsive */
         @media (max-width: 480px) {
-            .container {
-                padding: 32px 24px;
-            }
-
             .name {
                 font-size: 24px;
             }
@@ -307,7 +336,10 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="page">
         <!-- Header -->
         <div class="header">
             <div class="avatar">
@@ -335,6 +367,12 @@
                 </a>
             </div>
         </div>
+
+        <!-- Resume -->
+        <a href="https://github.com/ethan0xbuilds/ethan0xbuilds/releases/download/resume_20260330/ethan_resume.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn" aria-label="View Resume PDF">
+            <span aria-hidden="true">📄</span>
+            <span>Resume</span>
+        </a>
 
         <!-- Projects Section -->
         <div class="content-section">
