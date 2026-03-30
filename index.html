@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethan</title>
+    <meta name="description" content="某不知名程序员" />
+    <meta property="og:title" content="Ethan" />
+    <meta property="og:description" content="某不知名程序员" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.oasaka.xyz" />
+    <meta property="og:image" content="https://www.oasaka.xyz/avatar.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Ethan" />
+    <meta name="twitter:description" content="某不知名程序员" />
+    <meta name="twitter:image" content="https://www.oasaka.xyz/avatar.png" />
     <style>
         * {
             margin: 0;
@@ -35,6 +45,13 @@
             }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
@@ -51,9 +68,9 @@
             max-width: 600px;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px 30px;
+            padding: 40px 32px;
             animation: slideUp 0.6s ease-out;
         }
 
@@ -74,10 +91,17 @@
             }
         }
 
+        /* Focus states */
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--highlight);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
         /* Header Section */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .avatar {
@@ -89,7 +113,7 @@
             align-items: center;
             justify-content: center;
             font-size: 60px;
-            margin: 0 auto 20px;
+            margin: 0 auto 16px;
             box-shadow: 0 10px 30px rgba(22, 160, 133, 0.3);
             overflow: hidden;
             border: 3px solid var(--highlight);
@@ -104,34 +128,33 @@
         .name {
             font-size: 28px;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: var(--text);
         }
 
         .title {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--highlight);
             font-weight: 600;
-            margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         /* Social Links Section */
         .social-section {
-            margin-bottom: 30px;
-            padding: 25px;
+            margin-bottom: 24px;
+            padding: 24px;
             background: rgba(22, 160, 133, 0.08);
             border-radius: 12px;
             border-left: 4px solid var(--highlight);
         }
 
         .social-section h3 {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--highlight);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             font-weight: 600;
         }
 
@@ -152,7 +175,7 @@
             flex-direction: column;
             align-items: center;
             gap: 6px;
-            padding: 14px 10px;
+            padding: 16px 8px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -160,7 +183,7 @@
             color: var(--text);
             font-size: 13px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-align: center;
         }
 
@@ -174,6 +197,7 @@
             border-color: var(--highlight);
             color: var(--highlight);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .social-icon {
@@ -182,10 +206,10 @@
 
         /* Content Section */
         .content-section {
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             padding: 20px;
             background: rgba(0, 0, 0, 0.03);
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -195,7 +219,7 @@
         }
 
         .content-section h3 {
-            font-size: 14px;
+            font-size: 12px;
             color: var(--highlight);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -214,7 +238,7 @@
             text-decoration: none;
             color: var(--text);
             font-size: 14px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -226,7 +250,13 @@
         .project-card:hover {
             border-color: var(--highlight);
             color: var(--highlight);
-            transform: translateX(4px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-icon {
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
         .project-card-info {
@@ -247,7 +277,7 @@
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 32px;
             padding-top: 20px;
             border-top: 1px solid var(--border);
             font-size: 12px;
@@ -257,7 +287,7 @@
         /* Responsive */
         @media (max-width: 480px) {
             .container {
-                padding: 30px 20px;
+                padding: 32px 24px;
             }
 
             .name {
@@ -265,7 +295,7 @@
             }
 
             .header {
-                margin-bottom: 25px;
+                margin-bottom: 24px;
             }
 
             .avatar {
@@ -291,16 +321,16 @@
         <div class="social-section">
             <h3>Connect</h3>
             <div class="social-links">
-                <a href="https://x.com/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <span class="social-icon">𝕏</span>
+                <a href="https://x.com/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow on X / Twitter">
+                    <span class="social-icon" aria-hidden="true">𝕏</span>
                     <span>X / Twitter</span>
                 </a>
-                <a href="https://t.me/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <span class="social-icon">✈️</span>
+                <a href="https://t.me/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Message on Telegram">
+                    <span class="social-icon" aria-hidden="true">✈️</span>
                     <span>Telegram</span>
                 </a>
-                <a href="https://discord.com/users/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <span class="social-icon">💬</span>
+                <a href="https://discord.com/users/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Connect on Discord">
+                    <span class="social-icon" aria-hidden="true">💬</span>
                     <span>Discord</span>
                 </a>
             </div>
@@ -309,8 +339,8 @@
         <!-- Projects Section -->
         <div class="content-section">
             <h3>Featured Projects</h3>
-            <a href="https://github.com/ethan0xbuilds/ai-context-vault-cn" target="_blank" rel="noopener noreferrer" class="project-card">
-                <span style="font-size:20px">🗄️</span>
+            <a href="https://github.com/ethan0xbuilds/ai-context-vault-cn" target="_blank" rel="noopener noreferrer" class="project-card" aria-label="View ai-context-vault-cn on GitHub">
+                <span class="project-icon" aria-hidden="true">🗄️</span>
                 <div class="project-card-info">
                     <span class="project-card-name">ai-context-vault-cn</span>
                     <span class="project-card-desc">AI context management tool (Chinese edition)</span>
@@ -320,7 +350,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>© 2026 Ethan. Deployed on www.oasaka.xyz</p>
+            <p>© 2026 Ethan</p>
         </div>
     </div>
 </body>
