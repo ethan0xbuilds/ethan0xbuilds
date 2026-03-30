@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethan | 0x以太 - Web3 Engineer</title>
+    <title>Ethan</title>
     <style>
         * {
             margin: 0;
@@ -117,50 +117,6 @@
             letter-spacing: 1px;
         }
 
-        /* Language Toggle */
-        .lang-toggle {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            display: flex;
-            gap: 5px;
-            z-index: 10;
-        }
-
-        .lang-btn {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--highlight);
-            background: transparent;
-            color: var(--highlight);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .lang-btn.active {
-            background: var(--highlight);
-            color: white;
-        }
-
-        .lang-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Bio Section */
-        .bio {
-            margin-bottom: 30px;
-            line-height: 1.6;
-            font-size: 15px;
-            color: var(--text-light);
-        }
-
-        .bio p {
-            margin-bottom: 12px;
-        }
-
         /* Social Links Section */
         .social-section {
             margin-bottom: 30px;
@@ -181,7 +137,7 @@
 
         .social-links {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
 
@@ -193,17 +149,19 @@
 
         .social-link {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
+            gap: 6px;
+            padding: 14px 10px;
             background: white;
             border: 1px solid var(--border);
             border-radius: 8px;
             text-decoration: none;
             color: var(--text);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             transition: all 0.3s ease;
+            text-align: center;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -215,14 +173,14 @@
         .social-link:hover {
             border-color: var(--highlight);
             color: var(--highlight);
-            transform: translateX(4px);
+            transform: translateY(-2px);
         }
 
         .social-icon {
             font-size: 18px;
         }
 
-        /* Content Placeholders */
+        /* Content Section */
         .content-section {
             margin-bottom: 30px;
             padding: 20px;
@@ -245,10 +203,45 @@
             font-weight: 600;
         }
 
-        .placeholder {
+        .project-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .project-card {
+                background: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        .project-card:hover {
+            border-color: var(--highlight);
+            color: var(--highlight);
+            transform: translateX(4px);
+        }
+
+        .project-card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .project-card-name {
+            font-weight: 600;
+        }
+
+        .project-card-desc {
+            font-size: 12px;
             color: var(--text-light);
-            font-size: 13px;
-            font-style: italic;
         }
 
         /* Footer */
@@ -265,11 +258,6 @@
         @media (max-width: 480px) {
             .container {
                 padding: 30px 20px;
-            }
-
-            .lang-toggle {
-                top: 20px;
-                right: 20px;
             }
 
             .name {
@@ -289,29 +277,19 @@
     </style>
 </head>
 <body>
-    <div class="lang-toggle">
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="zh">中</button>
-    </div>
-
     <div class="container">
         <!-- Header -->
         <div class="header">
             <div class="avatar">
                 <img src="avatar.png" alt="Ethan" />
             </div>
-            <h1 class="name">Ethan | 0x以太</h1>
-            <div class="title" data-i18n="title">Engineer 🧑‍💻</div>
-        </div>
-
-        <!-- Bio Section -->
-        <div class="bio">
-            <p data-i18n="bio">云 → Web3转行中 | 写代码 / 修bug / 求不被rug | 欢迎交流 & 远程机会</p>
+            <h1 class="name">Ethan</h1>
+            <div class="title">某不知名程序员</div>
         </div>
 
         <!-- Social Links Section -->
         <div class="social-section">
-            <h3 data-i18n="connect">Connect</h3>
+            <h3>Connect</h3>
             <div class="social-links">
                 <a href="https://x.com/ethan0xbuilds" target="_blank" rel="noopener noreferrer" class="social-link">
                     <span class="social-icon">𝕏</span>
@@ -325,97 +303,25 @@
                     <span class="social-icon">💬</span>
                     <span>Discord</span>
                 </a>
-                <a href="https://linktr.ee/ethan0x" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <span class="social-icon">🔗</span>
-                    <span data-i18n="linktree">Linktree</span>
-                </a>
             </div>
         </div>
 
-        <!-- Content Placeholders -->
-        <!-- Projects Section Placeholder -->
+        <!-- Projects Section -->
         <div class="content-section">
-            <h3 data-i18n="projects">Featured Projects</h3>
-            <div class="placeholder" data-i18n="projects-placeholder">Coming soon - showcase your best work and contributions</div>
-        </div>
-
-        <!-- Articles Section Placeholder -->
-        <div class="content-section">
-            <h3 data-i18n="articles">Articles & Insights</h3>
-            <div class="placeholder" data-i18n="articles-placeholder">Coming soon - share your thoughts on Web3, blockchain, and technology</div>
+            <h3>Featured Projects</h3>
+            <a href="https://github.com/ethan0xbuilds/ai-context-vault-cn" target="_blank" rel="noopener noreferrer" class="project-card">
+                <span style="font-size:20px">🗄️</span>
+                <div class="project-card-info">
+                    <span class="project-card-name">ai-context-vault-cn</span>
+                    <span class="project-card-desc">AI context management tool (Chinese edition)</span>
+                </div>
+            </a>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p data-i18n="footer">© 2026 Ethan. Deployed on www.oasaka.xyz</p>
+            <p>© 2026 Ethan. Deployed on www.oasaka.xyz</p>
         </div>
     </div>
-
-    <script>
-        // Internationalization Data
-        const translations = {
-            en: {
-                title: 'Engineer 🧑‍💻',
-                bio: 'Cloud → Web3 transition | Writing code / Fixing bugs / Avoiding rugs | Open to collaboration & remote opportunities',
-                connect: 'Connect',
-                linktree: 'Linktree',
-                projects: 'Featured Projects',
-                'projects-placeholder': 'Coming soon - showcase your best work and contributions',
-                articles: 'Articles & Insights',
-                'articles-placeholder': 'Coming soon - share your thoughts on Web3, blockchain, and technology',
-                footer: '© 2026 Ethan. Deployed on www.oasaka.xyz'
-            },
-            zh: {
-                title: '工程师 🧑‍💻',
-                bio: '云 → Web3转行中 | 写代码 / 修bug / 求不被rug | 欢迎交流 & 远程机会',
-                connect: '联系方式',
-                linktree: 'Linktree',
-                projects: '精选项目',
-                'projects-placeholder': '敬请期待 - 展示你最出色的作品和贡献',
-                articles: '文章与见解',
-                'articles-placeholder': '敬请期待 - 分享你对 Web3、区块链和技术的思考',
-                footer: '© 2026 Ethan。部署在 www.oasaka.xyz'
-            }
-        };
-
-        // Language switching
-        const langButtons = document.querySelectorAll('[data-lang]');
-        const i18nElements = document.querySelectorAll('[data-i18n]');
-
-        function setLanguage(lang) {
-            // Update button states
-            langButtons.forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.lang === lang) {
-                    btn.classList.add('active');
-                }
-            });
-
-            // Update page language
-            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-
-            // Update content
-            i18nElements.forEach(el => {
-                const key = el.dataset.i18n;
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-
-            // Save preference
-            localStorage.setItem('language', lang);
-        }
-
-        // Event listeners
-        langButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                setLanguage(btn.dataset.lang);
-            });
-        });
-
-        // Load saved language preference
-        const savedLang = localStorage.getItem('language') || 'en';
-        setLanguage(savedLang);
-    </script>
 </body>
 </html>
