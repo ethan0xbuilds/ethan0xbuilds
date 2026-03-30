@@ -207,64 +207,46 @@ body {
             box-shadow: 0 4px 12px rgba(22, 160, 133, 0.3);
         }
 
-        /* Content Section */
-        .content-section {
-            margin-bottom: 24px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 12px;
-        }
-
-
-        .content-section h3 {
-            font-size: 12px;
-            color: var(--highlight);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
+        /* Project card */
         .project-card {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 16px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
             text-decoration: none;
-            color: var(--text);
+            color: white;
             font-size: 14px;
             transition: all 0.2s ease;
         }
 
-
         .project-card:hover {
-            border-color: var(--highlight);
-            color: var(--highlight);
+            background: rgba(255, 255, 255, 0.18);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .project-icon {
-            font-size: 20px;
+            font-size: 22px;
             flex-shrink: 0;
         }
 
         .project-card-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
 
         .project-card-name {
             font-weight: 600;
+            color: white;
         }
 
         .project-card-desc {
             font-size: 12px;
-            color: var(--text-light);
+            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Footer */
@@ -334,7 +316,7 @@ body {
         </a>
 
         <!-- Projects Section -->
-        <div class="content-section">
+        <div class="glass-card">
             <h3>Featured Projects</h3>
             <a href="https://github.com/ethan0xbuilds/ai-context-vault-cn" target="_blank" rel="noopener noreferrer" class="project-card" aria-label="View ai-context-vault-cn on GitHub">
                 <span class="project-icon" aria-hidden="true">🗄️</span>
