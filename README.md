@@ -2,7 +2,7 @@
 
 <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&lines=Software+Engineer;Cloud+Infrastructure;Open+Source+Builder" alt="Typing SVG" />
 
-### an obscure engineer, building in public.
+### AN OBSCURE ENGINEER, BUILDING IN PUBLIC.
 
 </div>
 
