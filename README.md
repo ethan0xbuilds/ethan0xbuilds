@@ -57,12 +57,12 @@
 
 <div align="center">
 
-<img height="160" src="https://github-readme-stats.vercel.app/api?username=ethan0xbuilds&show_icons=true&theme=github_dark&hide_border=true&count_private=true" />
-<img height="160" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ethan0xbuilds&layout=compact&theme=github_dark&hide_border=true&langs_count=8" />
+<img height="160" src="https://github-readme-stats-eight-theta.vercel.app/api?username=ethan0xbuilds&show_icons=true&theme=github_dark&hide_border=true&count_private=true" />
+<img height="160" src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs/?username=ethan0xbuilds&layout=compact&theme=github_dark&hide_border=true&langs_count=8" />
 
 <img src="https://streak-stats.demolab.com/?user=ethan0xbuilds&theme=github-dark-blue&hide_border=true" />
 
-<img src="https://github-profile-trophy.vercel.app/?username=ethan0xbuilds&theme=onedark&no-frame=true&row=1&column=7" />
+<img src="https://github-trophies.vercel.app/?username=ethan0xbuilds&theme=onedark&no-frame=true&row=1&column=7" />
 
 </div>
 
