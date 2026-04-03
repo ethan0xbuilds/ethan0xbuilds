@@ -1,5 +1,6 @@
 ---
 import StatusBar from '../components/StatusBar.astro';
+import Dock from '../components/Dock.astro';
 import Window from '../components/Window.astro';
 ---
 <html>
@@ -9,16 +10,17 @@ import Window from '../components/Window.astro';
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body { background: #0d1117; margin: 0; }
-    .desktop { position: relative; width: 100vw; height: 100vh; }
+    .desktop { position: relative; width: 100vw; height: calc(100vh - 28px - 56px); margin-top: 28px; overflow: hidden; }
   </style>
 </head>
 <body>
   <StatusBar />
   <div class="desktop">
-    <Window id="about" title="about.md" defaultWidth={480} defaultHeight={360} initiallyHidden={false}>
+    <Window id="about" title="about.md" defaultWidth={480} defaultHeight={360} initiallyHidden={true}>
       <p>Hello from About window!</p>
     </Window>
   </div>
+  <Dock />
   <script type="module">
     import { initWindowManager } from '/scripts/window-manager.js';
     initWindowManager();
