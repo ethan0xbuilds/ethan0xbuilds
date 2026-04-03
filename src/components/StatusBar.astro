@@ -1,0 +1,76 @@
+---
+// StatusBar renders the top 28px bar.
+// Time updates are handled client-side via inline script.
+---
+<header class="status-bar" role="banner">
+  <div class="status-left">
+    <span class="username">ethan<span class="at">@</span>desktop</span>
+    <span class="separator">·</span>
+    <span class="online-indicator" aria-label="online">
+      <span class="dot" aria-hidden="true"></span>online
+    </span>
+    <span class="separator">·</span>
+    <span class="path">~/home</span>
+  </div>
+  <div class="status-right">
+    <span class="datetime" id="statusbar-datetime" aria-live="polite"></span>
+  </div>
+</header>
+
+<style>
+.status-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+  user-select: none;
+}
+.username { color: #7eb8f7; font-weight: 600; }
+.at { color: rgba(255, 255, 255, 0.5); }
+.separator { margin: 0 6px; color: rgba(255, 255, 255, 0.3); }
+.online-indicator { display: flex; align-items: center; gap: 4px; color: #4ade80; }
+.dot {
+  width: 6px; height: 6px;
+  background: #4ade80;
+  border-radius: 50%;
+  display: inline-block;
+}
+.path { color: rgba(255, 255, 255, 0.5); }
+.datetime { color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 768px) {
+  .separator, .online-indicator, .path { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; }
+}
+</style>
+
+<script>
+function updateTime() {
+  const el = document.getElementById('statusbar-datetime');
+  if (!el) return;
+  const now = new Date();
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const day = days[now.getDay()];
+  const date = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  el.textContent = `${day} ${date}  ${time}`;
+}
+updateTime();
+setInterval(updateTime, 30000);
+</script>
