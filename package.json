@@ -1,11 +1,7 @@
 {
   "name": "ethan0xbuilds",
   "version": "1.0.0",
-  "description": "<div align=\"center\">",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -16,9 +12,7 @@
     "url": "git+https://github.com/ethan0xbuilds/ethan0xbuilds.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/ethan0xbuilds/ethan0xbuilds/issues"
   },
