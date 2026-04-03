@@ -1,0 +1,29 @@
+{
+  "name": "ethan0xbuilds",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethan0xbuilds/ethan0xbuilds.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/ethan0xbuilds/ethan0xbuilds/issues"
+  },
+  "homepage": "https://github.com/ethan0xbuilds/ethan0xbuilds#readme",
+  "dependencies": {
+    "astro": "^4.16.19"
+  }
+}
