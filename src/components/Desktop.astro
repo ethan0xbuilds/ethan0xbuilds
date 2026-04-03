@@ -72,7 +72,7 @@ const { Content: ContactContent } = await contactEntry.render();
 <body>
   <StatusBar />
 
-  <div class="desktop" id="desktop">
+  <div class="desktop" id="desktop" data-auto-open={autoOpen ?? ''}>
     <div class="desktop-bg" aria-hidden="true">
       <div class="bg-name">ETHAN</div>
       <div class="bg-tagline">Builder &amp; Tinkerer</div>
@@ -154,11 +154,11 @@ const { Content: ContactContent } = await contactEntry.render();
 
   <Dock />
 
-  <script define:vars={{ autoOpen }}>
-    import('/scripts/window-manager.js').then(m => {
-      m.initWindowManager();
-      if (autoOpen) m.openWindow(autoOpen);
-    });
+  <script type="module">
+    import { initWindowManager, openWindow } from '/scripts/window-manager.js';
+    initWindowManager();
+    const autoOpen = document.getElementById('desktop')?.dataset.autoOpen;
+    if (autoOpen) openWindow(autoOpen);
   </script>
 </body>
 </html>
