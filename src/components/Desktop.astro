@@ -1,0 +1,217 @@
+---
+import StatusBar from './StatusBar.astro';
+import Dock from './Dock.astro';
+import Window from './Window.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+interface Props {
+  autoOpen?: string;
+}
+const { autoOpen } = Astro.props;
+
+const projects = await getCollection('projects');
+const movies = await getCollection('movies');
+const books = await getCollection('books');
+const aboutEntry = await getEntry('about', 'index');
+const contactEntry = await getEntry('contact', 'index');
+const { Content: AboutContent } = await aboutEntry.render();
+const { Content: ContactContent } = await contactEntry.render();
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ethan@desktop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d1117;
+      font-family: 'JetBrains Mono', monospace;
+      overflow: hidden;
+      height: 100vh;
+    }
+    .desktop {
+      position: relative;
+      width: 100vw;
+      height: calc(100vh - 28px - 56px);
+      margin-top: 28px;
+      overflow: hidden;
+    }
+    .desktop-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .bg-name {
+      font-size: clamp(60px, 12vw, 120px);
+      font-weight: 700;
+      color: rgba(255,255,255,0.04);
+      letter-spacing: 0.3em;
+    }
+    .bg-tagline {
+      font-size: clamp(12px, 2vw, 16px);
+      color: rgba(255,255,255,0.03);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <StatusBar />
+
+  <div class="desktop" id="desktop">
+    <div class="desktop-bg" aria-hidden="true">
+      <div class="bg-name">ETHAN</div>
+      <div class="bg-tagline">Builder &amp; Tinkerer</div>
+    </div>
+
+    <!-- About Window -->
+    <Window id="about" title="about.md" defaultWidth={480} defaultHeight={360} defaultTop={80} defaultLeft={80}>
+      <AboutContent />
+    </Window>
+
+    <!-- Projects Window -->
+    <Window id="projects" title="projects/" defaultWidth={520} defaultHeight={400} defaultTop={100} defaultLeft={160}>
+      <div class="project-list">
+        {projects.map(p => (
+          <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-row" aria-label={p.data.name}>
+            <span class="project-icon">{p.data.icon}</span>
+            <div>
+              <div class="project-name">{p.data.name}</div>
+              <div class="project-desc">{p.data.description}</div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Window>
+
+    <!-- Blog Window -->
+    <Window id="blog" title="blog/" defaultWidth={480} defaultHeight={320} defaultTop={120} defaultLeft={200}>
+      <div style="color: rgba(255,255,255,0.4); text-align:center; padding-top: 60px;">
+        <div style="font-size:32px; margin-bottom:12px;">🚧</div>
+        <div>Coming soon...</div>
+      </div>
+    </Window>
+
+    <!-- Movies Window -->
+    <Window id="movies" title="movies/" defaultWidth={580} defaultHeight={480} defaultTop={90} defaultLeft={140}>
+      <div class="media-grid">
+        {movies.sort((a, b) => b.data.year - a.data.year).map(m => (
+          <div class="media-card">
+            {m.data.cover
+              ? <img src={m.data.cover} alt={m.data.title} class="media-cover" />
+              : <div class="media-placeholder">🎬</div>
+            }
+            <div class="media-body">
+              <div class="media-title">{m.data.title}</div>
+              <div class="media-rating">{'★'.repeat(m.data.rating)}{'☆'.repeat(5 - m.data.rating)}</div>
+              <div class="media-year">{m.data.year}</div>
+              <div class="media-review">{m.data.review}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Window>
+
+    <!-- Books Window -->
+    <Window id="books" title="books/" defaultWidth={580} defaultHeight={480} defaultTop={100} defaultLeft={160}>
+      <div class="media-grid">
+        {books.map(b => (
+          <div class="media-card">
+            {b.data.cover
+              ? <img src={b.data.cover} alt={b.data.title} class="media-cover" />
+              : <div class="media-placeholder">📖</div>
+            }
+            <div class="media-body">
+              <div class="media-title">{b.data.title}</div>
+              <div class="media-rating">{'★'.repeat(b.data.rating)}{'☆'.repeat(5 - b.data.rating)}</div>
+              <div class="media-author">{b.data.author}</div>
+              <div class="media-review">{b.data.review}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Window>
+
+    <!-- Contact Window -->
+    <Window id="contact" title="contact.md" defaultWidth={400} defaultHeight={280} defaultTop={110} defaultLeft={180}>
+      <ContactContent />
+    </Window>
+  </div>
+
+  <Dock />
+
+  <script define:vars={{ autoOpen }}>
+    import('/scripts/window-manager.js').then(m => {
+      m.initWindowManager();
+      if (autoOpen) m.openWindow(autoOpen);
+    });
+  </script>
+</body>
+</html>
+
+<style is:global>
+  .project-list { display: flex; flex-direction: column; gap: 12px; }
+  .project-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s ease;
+  }
+  .project-row:hover { background: rgba(255,255,255,0.1); }
+  .project-row:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .project-icon { font-size: 24px; }
+  .project-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .project-desc { font-size: 11px; color: rgba(255,255,255,0.5); }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .media-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .media-cover {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    display: block;
+  }
+  .media-placeholder {
+    width: 100%;
+    aspect-ratio: 2/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    background: rgba(255,255,255,0.03);
+  }
+  .media-body { padding: 8px; }
+  .media-title { font-size: 12px; font-weight: 600; color: white; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .media-rating { font-size: 11px; color: rgba(255,200,80,0.9); margin-bottom: 2px; }
+  .media-year, .media-author { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
+  .media-review { font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+</style>
