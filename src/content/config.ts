@@ -1,0 +1,45 @@
+import { defineCollection, z } from 'astro:content';
+
+const about = defineCollection({
+  type: 'content',
+  schema: z.object({}),
+});
+
+const contact = defineCollection({
+  type: 'content',
+  schema: z.object({}),
+});
+
+const projects = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    description: z.string(),
+    url: z.string().url(),
+    icon: z.string(),
+  }),
+});
+
+const movies = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    cover: z.string().optional(),
+    rating: z.number().min(1).max(5),
+    review: z.string(),
+    year: z.number(),
+  }),
+});
+
+const books = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    cover: z.string().optional(),
+    rating: z.number().min(1).max(5),
+    review: z.string(),
+    author: z.string(),
+  }),
+});
+
+export const collections = { about, contact, projects, movies, books };

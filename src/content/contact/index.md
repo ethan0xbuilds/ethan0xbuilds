@@ -1,0 +1,5 @@
+---
+---
+- GitHub: [ethan0xbuilds](https://github.com/ethan0xbuilds)
+- Email: hi@oasaka.xyz
+- X: [@ethan0xbuilds](https://x.com/ethan0xbuilds)
