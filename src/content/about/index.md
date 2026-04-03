@@ -1,7 +1,11 @@
 ---
 ---
-Builder & tinkerer. I work on developer tools, AI applications, and anything that makes computers feel more human.
+AN OBSCURE ENGINEER, BUILDING IN PUBLIC.
 
-**Stack:** TypeScript · Python · Rust · Go
+**Languages:** Python · Go · Java · Shell
 
-**Interests:** Systems programming · LLM tooling · Open source
+**Frameworks:** Spring Boot · Django · Vue.js
+
+**Cloud & DevOps:** Docker · Kubernetes · OpenStack · Nginx · Prometheus · Jenkins
+
+**Middleware & DB:** RabbitMQ · Pulsar · RocketMQ · Redis · MySQL · Elasticsearch
