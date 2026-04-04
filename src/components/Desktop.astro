@@ -213,11 +213,17 @@ const blogRendered = await Promise.all(
 
     <!-- Blog Window -->
     <Window id="blog" title="blog/" defaultWidth={520} defaultHeight={380} defaultTop={120} defaultLeft={200}>
+      <div class="books-filters" id="blog-filters">
+        <button class="filter-btn active" data-filter="all">all</button>
+        <button class="filter-btn" data-filter="tech">tech</button>
+        <button class="filter-btn" data-filter="life">life</button>
+      </div>
       <div class="blog-list" id="blog-list">
         {blogPosts.map(post => (
           <button
             class="blog-row"
             data-post-id={post.id}
+            data-category={post.data.category}
             aria-label={post.data.title}
           >
             <span class="blog-date">{post.data.date}</span>
@@ -378,16 +384,34 @@ const blogRendered = await Promise.all(
       if (detail) detail.style.display = 'none';
       if (content) content.innerHTML = '';
       if (winTitle) winTitle.textContent = 'blog/';
+      // Reset filter to "all"
+      document.querySelectorAll('#blog-filters .filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('#blog-filters .filter-btn[data-filter="all"]')?.classList.add('active');
+      list?.querySelectorAll('.blog-row').forEach(row => (row.style.display = ''));
     }
 
     document.getElementById('win-blog')?.addEventListener('animationstart', (e) => {
       if (e.animationName === 'win-open') resetBlogWindow();
     });
 
+    // Blog category filter
+    document.querySelectorAll('#blog-filters .filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = document.getElementById('blog-filters');
+        group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.blog-row').forEach(row => {
+          row.style.display = (filter === 'all' || row.dataset.category === filter) ? '' : 'none';
+        });
+      });
+    });
+
     // Media filter (movies + books)
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const gridId = btn.dataset.filterGrid;
+        if (!gridId) return; // skip blog filter buttons which have no data-filter-grid
         const group = btn.closest('.books-filters');
         group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');

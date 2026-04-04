@@ -2,6 +2,7 @@
 title: "如何用 Claude Code 构建个人网站"
 date: "2026-04-01"
 summary: "用 AI 辅助开发一个模拟 Linux 桌面的 Astro 个人网站全过程记录。"
+category: "tech"
 ---
 
 ## 背景
