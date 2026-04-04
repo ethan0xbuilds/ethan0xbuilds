@@ -44,4 +44,13 @@ const books = defineCollection({
   }),
 });
 
-export const collections = { about, contact, projects, movies, books };
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.string(), // "YYYY-MM-DD"
+    summary: z.string(),
+  }),
+});
+
+export const collections = { about, contact, projects, movies, books, blog };

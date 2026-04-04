@@ -16,6 +16,15 @@ const aboutEntry = await getEntry('about', 'index');
 const contactEntry = await getEntry('contact', 'index');
 const { Content: AboutContent } = await aboutEntry.render();
 const { Content: ContactContent } = await contactEntry.render();
+const blogPosts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+const blogRendered = await Promise.all(
+  blogPosts.map(async post => {
+    const { Content } = await post.render();
+    return { id: post.id, Content };
+  })
+);
 ---
 
 <html lang="en">
@@ -119,12 +128,31 @@ const { Content: ContactContent } = await contactEntry.render();
     </Window>
 
     <!-- Blog Window -->
-    <Window id="blog" title="blog/" defaultWidth={480} defaultHeight={320} defaultTop={120} defaultLeft={200}>
-      <div style="color: rgba(255,255,255,0.4); text-align:center; padding-top: 60px;">
-        <div style="font-size:32px; margin-bottom:12px;">🚧</div>
-        <div>Coming soon...</div>
+    <Window id="blog" title="blog/" defaultWidth={520} defaultHeight={380} defaultTop={120} defaultLeft={200}>
+      <div class="blog-list" id="blog-list">
+        {blogPosts.map(post => (
+          <button
+            class="blog-row"
+            data-post-id={post.id}
+            aria-label={post.data.title}
+          >
+            <span class="blog-date">{post.data.date}</span>
+            <span class="blog-title">{post.data.title}</span>
+          </button>
+        ))}
+      </div>
+      <div class="blog-detail" id="blog-detail" style="display:none;">
+        <button class="blog-back" id="blog-back">← back</button>
+        <div class="blog-post-content" id="blog-post-content"></div>
       </div>
     </Window>
+
+    <!-- Hidden rendered blog content for client-side navigation -->
+    <div style="display:none;" aria-hidden="true">
+      {blogRendered.map(({ id, Content }) => (
+        <div id={`blog-post-${id}`}><Content /></div>
+      ))}
+    </div>
 
     <!-- Movies Window -->
     <Window id="movies" title="movies/" defaultWidth={580} defaultHeight={480} defaultTop={90} defaultLeft={140}>
@@ -179,6 +207,39 @@ const { Content: ContactContent } = await contactEntry.render();
     initWindowManager();
     const autoOpen = document.getElementById('desktop')?.dataset.autoOpen;
     if (autoOpen) openWindow(autoOpen);
+
+    // Blog in-window navigation
+    document.querySelectorAll('.blog-row').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const list = document.getElementById('blog-list');
+        const detail = document.getElementById('blog-detail');
+        const content = document.getElementById('blog-post-content');
+        const postId = btn.dataset.postId;
+        const hidden = document.getElementById(`blog-post-${postId}`);
+        if (!hidden || !list || !detail || !content) return;
+        content.innerHTML = hidden.innerHTML;
+        const win = btn.closest('[id^="win-"]');
+        if (win) {
+          const titleEl = win.querySelector('.win-title');
+          if (titleEl) titleEl.textContent = `blog/${postId}.md`;
+        }
+        list.style.display = 'none';
+        detail.style.display = 'block';
+      });
+    });
+
+    document.getElementById('blog-back')?.addEventListener('click', () => {
+      const list = document.getElementById('blog-list');
+      const detail = document.getElementById('blog-detail');
+      const win = document.getElementById('win-blog');
+      if (!list || !detail) return;
+      list.style.display = '';
+      detail.style.display = 'none';
+      if (win) {
+        const titleEl = win.querySelector('.win-title');
+        if (titleEl) titleEl.textContent = 'blog/';
+      }
+    });
   </script>
 </body>
 </html>
@@ -335,4 +396,56 @@ const { Content: ContactContent } = await contactEntry.render();
   .media-rating { font-size: 11px; color: rgba(255,200,80,0.9); margin-bottom: 2px; }
   .media-year, .media-author { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
   .media-review { font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .blog-list { display: flex; flex-direction: column; }
+  .blog-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .blog-row:last-child { border-bottom: none; }
+  .blog-date { font-size: 11px; color: rgba(255,255,255,0.35); min-width: 90px; flex-shrink: 0; }
+  .blog-title { font-size: 12px; color: rgba(255,255,255,0.8); transition: color 0.15s; }
+  .blog-row:hover .blog-title { color: #c75b39; }
+  .blog-row:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .blog-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0 0 12px 0;
+    transition: color 0.15s;
+  }
+  .blog-back:hover { color: #c75b39; }
+  .blog-post-content { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.8); }
+  .blog-post-content h1, .blog-post-content h2 {
+    color: white;
+    margin: 16px 0 8px;
+    font-size: 14px;
+  }
+  .blog-post-content p { margin-bottom: 10px; }
+  .blog-post-content code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+  .blog-post-content ol, .blog-post-content ul { padding-left: 20px; margin-bottom: 10px; }
+  .blog-post-content li { margin-bottom: 4px; }
 </style>
