@@ -387,7 +387,7 @@ const blogRendered = await Promise.all(
       // Reset filter to "all"
       document.querySelectorAll('#blog-filters .filter-btn').forEach(b => b.classList.remove('active'));
       document.querySelector('#blog-filters .filter-btn[data-filter="all"]')?.classList.add('active');
-      document.querySelectorAll('.blog-row').forEach(row => row.style.display = '');
+      list?.querySelectorAll('.blog-row').forEach(row => (row.style.display = ''));
     }
 
     document.getElementById('win-blog')?.addEventListener('animationstart', (e) => {
@@ -411,6 +411,7 @@ const blogRendered = await Promise.all(
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const gridId = btn.dataset.filterGrid;
+        if (!gridId) return; // skip blog filter buttons which have no data-filter-grid
         const group = btn.closest('.books-filters');
         group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
