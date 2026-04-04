@@ -30,6 +30,7 @@ const movies = defineCollection({
     rating: z.number().min(1).max(5),
     review: z.string(),
     year: z.number(),
+    watched: z.string(), // "YYYY-MM"
   }),
 });
 
@@ -41,6 +42,7 @@ const books = defineCollection({
     rating: z.number().min(1).max(5),
     review: z.string(),
     author: z.string(),
+    status: z.enum(['reading', 'finished', 'want']).default('finished'),
   }),
 });
 
