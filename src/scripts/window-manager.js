@@ -38,13 +38,13 @@ export function openWindow(id) {
 /** Close a window by id */
 export function closeWindow(id) {
   const win = document.getElementById(`win-${id}`);
-  if (!win || win.classList.contains('win-hidden')) return;
+  if (!win || win.classList.contains('win-hidden') || win.classList.contains('win-closing')) return;
   win.classList.add('win-closing');
   win.addEventListener('animationend', () => {
     win.classList.add('win-hidden');
     win.classList.remove('win-closing');
     win.classList.remove('win-focused');
-    const next = [...document.querySelectorAll('.window:not(.win-hidden)')]
+    const next = [...document.querySelectorAll('.window:not(.win-hidden):not(.win-closing)')]
       .sort((a, b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
     if (next) focusWindow(next);
     const openWindows = [...document.querySelectorAll('.window:not(.win-hidden)')];
@@ -57,15 +57,10 @@ export function closeWindow(id) {
 export function toggleWindow(id) {
   const win = document.getElementById(`win-${id}`);
   if (!win) return;
-  if (win.classList.contains('win-hidden')) {
+  if (win.classList.contains('win-hidden') || win.classList.contains('win-closing')) {
     openWindow(id);
   } else {
-    win.classList.add('win-hidden');
-    win.classList.remove('win-focused');
-    const next = [...document.querySelectorAll('.window:not(.win-hidden)')]
-      .sort((a, b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
-    if (next) focusWindow(next);
-    updateDockIndicators();
+    closeWindow(id);
   }
 }
 
