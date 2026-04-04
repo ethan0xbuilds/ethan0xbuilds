@@ -209,6 +209,8 @@ const blogRendered = await Promise.all(
     if (autoOpen) openWindow(autoOpen);
 
     // Blog in-window navigation
+    let lastClickedRow = null;
+
     document.querySelectorAll('.blog-row').forEach(btn => {
       btn.addEventListener('click', () => {
         const list = document.getElementById('blog-list');
@@ -217,6 +219,7 @@ const blogRendered = await Promise.all(
         const postId = btn.dataset.postId;
         const hidden = document.getElementById(`blog-post-${postId}`);
         if (!hidden || !list || !detail || !content) return;
+        lastClickedRow = btn;
         content.innerHTML = hidden.innerHTML;
         const win = btn.closest('[id^="win-"]');
         if (win) {
@@ -225,6 +228,7 @@ const blogRendered = await Promise.all(
         }
         list.style.display = 'none';
         detail.style.display = 'block';
+        document.getElementById('blog-back')?.focus();
       });
     });
 
@@ -239,6 +243,23 @@ const blogRendered = await Promise.all(
         const titleEl = win.querySelector('.win-title');
         if (titleEl) titleEl.textContent = 'blog/';
       }
+      lastClickedRow?.focus();
+    });
+
+    // Reset blog to list view when window opens
+    function resetBlogWindow() {
+      const list = document.getElementById('blog-list');
+      const detail = document.getElementById('blog-detail');
+      const content = document.getElementById('blog-post-content');
+      const winTitle = document.querySelector('#win-blog .win-title');
+      if (list) list.style.display = '';
+      if (detail) detail.style.display = 'none';
+      if (content) content.innerHTML = '';
+      if (winTitle) winTitle.textContent = 'blog/';
+    }
+
+    document.getElementById('win-blog')?.addEventListener('animationstart', (e) => {
+      if (e.animationName === 'win-open') resetBlogWindow();
     });
   </script>
 </body>
@@ -433,6 +454,7 @@ const blogRendered = await Promise.all(
     transition: color 0.15s;
   }
   .blog-back:hover { color: #c75b39; }
+  .blog-back:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
   .blog-post-content { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.8); }
   .blog-post-content h1, .blog-post-content h2 {
     color: white;
