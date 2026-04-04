@@ -188,23 +188,69 @@ const { Content: ContactContent } = await contactEntry.render();
     border: 2px solid rgba(126,184,247,0.4);
   }
 
-  /* About window markdown content */
-  .about-profile + * p:first-child {
-    font-size: 11px;
+  /* About tagline */
+  .about-profile + * > p:first-child {
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  /* About bio text */
+  .about-profile + * > p:nth-child(2) {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
     margin-bottom: 16px;
   }
-  .about-profile + * strong {
-    color: #7eb8f7;
+
+  /* Neofetch block */
+  .neofetch {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .nf-row { display: flex; gap: 0; margin-bottom: 3px; }
+  .nf-row:last-child { margin-bottom: 0; }
+  .nf-key {
+    color: #c75b39;
+    min-width: 90px;
     font-weight: 600;
   }
-  .about-profile + * p {
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.8;
-    margin-bottom: 8px;
+  .nf-sep { color: rgba(255,255,255,0.3); margin-right: 8px; }
+  .nf-val { color: rgba(255,255,255,0.8); }
+
+  /* Highlight cards */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .hl-card {
+    background: rgba(199, 91, 57, 0.1);
+    border: 1px solid rgba(199, 91, 57, 0.25);
+    border-radius: 6px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+  .hl-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: #c75b39;
+  }
+  .hl-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.3;
   }
 
   .project-list { display: flex; flex-direction: column; gap: 12px; }
