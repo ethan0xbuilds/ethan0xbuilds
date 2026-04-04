@@ -22,9 +22,14 @@ function bringToFront(winEl) {
 export function openWindow(id) {
   const win = document.getElementById(`win-${id}`);
   if (!win) return;
-  if (win.classList.contains('win-hidden')) {
-    win.classList.remove('win-hidden');
+  if (!win.classList.contains('win-hidden')) {
+    // already open — just focus
+    bringToFront(win);
+    return;
   }
+  win.classList.remove('win-hidden', 'win-closing');
+  win.classList.add('win-opening');
+  win.addEventListener('animationend', () => win.classList.remove('win-opening'), { once: true });
   bringToFront(win);
   history.pushState({}, '', `/${id}`);
   updateDockIndicators();
@@ -33,17 +38,19 @@ export function openWindow(id) {
 /** Close a window by id */
 export function closeWindow(id) {
   const win = document.getElementById(`win-${id}`);
-  if (!win) return;
-  win.classList.add('win-hidden');
-  win.classList.remove('win-focused');
-  const next = [...document.querySelectorAll('.window:not(.win-hidden)')]
-    .sort((a, b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
-  if (next) focusWindow(next);
-  const openWindows = [...document.querySelectorAll('.window:not(.win-hidden)')];
-  if (openWindows.length === 0) {
-    history.pushState({}, '', '/');
-  }
-  updateDockIndicators();
+  if (!win || win.classList.contains('win-hidden')) return;
+  win.classList.add('win-closing');
+  win.addEventListener('animationend', () => {
+    win.classList.add('win-hidden');
+    win.classList.remove('win-closing');
+    win.classList.remove('win-focused');
+    const next = [...document.querySelectorAll('.window:not(.win-hidden)')]
+      .sort((a, b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
+    if (next) focusWindow(next);
+    const openWindows = [...document.querySelectorAll('.window:not(.win-hidden)')];
+    if (openWindows.length === 0) history.pushState({}, '', '/');
+    updateDockIndicators();
+  }, { once: true });
 }
 
 /** Toggle minimize: hide if visible, show if hidden */
