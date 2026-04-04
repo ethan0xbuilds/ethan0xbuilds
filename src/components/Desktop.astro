@@ -71,6 +71,55 @@ const blogRendered = await Promise.all(
       margin-top: 28px;
       overflow: hidden;
     }
+    .desktop-icons {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+    }
+    .desktop-file-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+    .desktop-file-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .desktop-file-icon:focus-visible {
+      outline: 2px solid #7eb8f7;
+      outline-offset: 2px;
+    }
+    .file-icon-svg {
+      width: 48px;
+      height: 60px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+    .file-icon-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+    .desktop-file-icon:hover .file-icon-label {
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .desktop-icons { top: 8px; right: 10px; }
+      .file-icon-svg { width: 40px; height: 50px; }
+    }
+
     .desktop-bg {
       position: absolute;
       inset: 0;
@@ -107,6 +156,25 @@ const blogRendered = await Promise.all(
     <div class="desktop-bg" aria-hidden="true">
       <div class="bg-name">ETHAN</div>
       <div class="bg-tagline">Builder &amp; Tinkerer</div>
+    </div>
+
+    <!-- Desktop file icons -->
+    <div class="desktop-icons">
+      <button
+        class="desktop-file-icon"
+        aria-label="Open Resume PDF"
+        onclick="(function(){import('/scripts/window-manager.js').then(m=>m.toggleWindow('resume'))})()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80" class="file-icon-svg">
+          <rect x="4" y="2" width="44" height="56" rx="4" ry="4" fill="#c75b39" opacity="0.9"/>
+          <path d="M48 2 L60 14 L48 14 Z" fill="#a34a2e"/>
+          <path d="M48 2 L48 14 L60 14" fill="none" stroke="#a34a2e" stroke-width="0"/>
+          <rect x="48" y="14" width="12" height="44" rx="0" ry="0" fill="#c75b39" opacity="0.75"/>
+          <path d="M48 2 L60 14 L48 14 Z" fill="rgba(0,0,0,0.15)"/>
+          <text x="30" y="42" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="white" opacity="0.95">PDF</text>
+        </svg>
+        <span class="file-icon-label">resume.pdf</span>
+      </button>
     </div>
 
     <!-- About Window -->
