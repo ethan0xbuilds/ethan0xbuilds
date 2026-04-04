@@ -103,8 +103,8 @@ const { Content: ContactContent } = await contactEntry.render();
                 <span class="project-name">{p.data.name}</span>
                 <span class={`project-type project-type-${p.data.type}`}>{p.data.type}</span>
                 {p.data.url && (
-                  <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Open link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-link" aria-label={`Open ${p.data.name} external link`}>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                   </a>
                 )}
               </div>
@@ -292,6 +292,7 @@ const { Content: ContactContent } = await contactEntry.render();
   .project-type-side { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
   .project-link { color: rgba(255,255,255,0.4); display: flex; align-items: center; margin-left: auto; text-decoration: none; }
   .project-link:hover { color: #c75b39; }
+  .project-link:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; border-radius: 2px; }
   .project-desc { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 5px; }
   .project-tech { display: flex; flex-wrap: wrap; gap: 4px; }
   .tech-tag {
