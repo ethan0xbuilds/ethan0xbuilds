@@ -2,7 +2,7 @@
 ---
 AN OBSCURE ENGINEER, BUILDING IN PUBLIC.
 
-6 年软件开发经验，近 5 年深耕华为云 OpenStack 控制面。主导云原生化改造、性能调优与消息中间件治理。开源贡献者，prometheus/client_python 核心 PR 合并（73 轮 review，4 个月）。
+<p class="about-bio">6 年软件开发经验，近 5 年深耕华为云 OpenStack 控制面。主导云原生化改造、性能调优与消息中间件治理。开源贡献者，prometheus/client_python 核心 PR 合并（73 轮 review，4 个月）。</p>
 
 <div class="neofetch">
   <div class="nf-row"><span class="nf-key">Languages</span><span class="nf-sep">:</span><span class="nf-val">Python · Go · Java · Shell</span></div>
