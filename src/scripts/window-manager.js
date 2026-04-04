@@ -35,6 +35,10 @@ export function closeWindow(id) {
   const win = document.getElementById(`win-${id}`);
   if (!win) return;
   win.classList.add('win-hidden');
+  win.classList.remove('win-focused');
+  const next = [...document.querySelectorAll('.window:not(.win-hidden)')]
+    .sort((a, b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
+  if (next) focusWindow(next);
   const openWindows = [...document.querySelectorAll('.window:not(.win-hidden)')];
   if (openWindows.length === 0) {
     history.pushState({}, '', '/');
@@ -50,6 +54,10 @@ export function toggleWindow(id) {
     openWindow(id);
   } else {
     win.classList.add('win-hidden');
+    win.classList.remove('win-focused');
+    const next = [...document.querySelectorAll('.window:not(.win-hidden)')]
+      .sort((a, b) => (+b.style.zIndex || 0) - (+a.style.zIndex || 0))[0];
+    if (next) focusWindow(next);
     updateDockIndicators();
   }
 }
