@@ -53,6 +53,7 @@ const blog = defineCollection({
     title: z.string(),
     date: z.string(), // "YYYY-MM-DD"
     summary: z.string(),
+    category: z.enum(['tech', 'life']),
   }),
 });
 

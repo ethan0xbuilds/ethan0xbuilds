@@ -2,6 +2,7 @@
 title: "我的 OpenStack 云原生化实践总结"
 date: "2026-03-15"
 summary: "5 年华为云 OpenStack 经验，30+ 组件迁移 K8s 的技术细节与踩坑记录。"
+category: tech
 ---
 
 ## 背景
