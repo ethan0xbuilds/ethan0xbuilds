@@ -15,8 +15,10 @@ const projects = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    url: z.string().url(),
+    url: z.string().url().optional(),
     icon: z.string(),
+    type: z.enum(['work', 'oss', 'side']),
+    tech: z.array(z.string()),
   }),
 });
 

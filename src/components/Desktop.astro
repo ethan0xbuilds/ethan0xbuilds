@@ -96,13 +96,24 @@ const { Content: ContactContent } = await contactEntry.render();
     <Window id="projects" title="projects/" defaultWidth={520} defaultHeight={400} defaultTop={100} defaultLeft={160}>
       <div class="project-list">
         {projects.map(p => (
-          <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-row" aria-label={p.data.name}>
+          <div class="project-row">
             <span class="project-icon">{p.data.icon}</span>
-            <div>
-              <div class="project-name">{p.data.name}</div>
+            <div class="project-info">
+              <div class="project-name-row">
+                <span class="project-name">{p.data.name}</span>
+                <span class={`project-type project-type-${p.data.type}`}>{p.data.type}</span>
+                {p.data.url && (
+                  <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Open link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                )}
+              </div>
               <div class="project-desc">{p.data.description}</div>
+              <div class="project-tech">
+                {p.data.tech.map(t => <span class="tech-tag">{t}</span>)}
+              </div>
             </div>
-          </a>
+          </div>
         ))}
       </div>
     </Window>
@@ -252,24 +263,45 @@ const { Content: ContactContent } = await contactEntry.render();
     line-height: 1.3;
   }
 
-  .project-list { display: flex; flex-direction: column; gap: 12px; }
+  .project-list { display: flex; flex-direction: column; gap: 8px; }
   .project-row {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 10px;
     padding: 10px 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
     transition: background 0.15s ease;
   }
-  .project-row:hover { background: rgba(255,255,255,0.1); }
-  .project-row:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
-  .project-icon { font-size: 24px; }
-  .project-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
-  .project-desc { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .project-row:hover { background: rgba(255,255,255,0.08); }
+  .project-icon { font-size: 20px; margin-top: 2px; flex-shrink: 0; }
+  .project-info { flex: 1; min-width: 0; }
+  .project-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; flex-wrap: wrap; }
+  .project-name { font-size: 12px; font-weight: 600; color: #c75b39; }
+  .project-type {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .project-type-work { background: rgba(59,130,246,0.2); color: #7eb8f7; border: 1px solid rgba(59,130,246,0.3); }
+  .project-type-oss  { background: rgba(34,197,94,0.2);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+  .project-type-side { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+  .project-link { color: rgba(255,255,255,0.4); display: flex; align-items: center; margin-left: auto; text-decoration: none; }
+  .project-link:hover { color: #c75b39; }
+  .project-desc { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 5px; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tech-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    color: rgba(255,255,255,0.5);
+  }
 
   .media-grid {
     display: grid;
