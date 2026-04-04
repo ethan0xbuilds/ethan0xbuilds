@@ -15,8 +15,10 @@ const projects = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    url: z.string().url(),
+    url: z.string().url().optional(),
     icon: z.string(),
+    type: z.enum(['work', 'oss', 'side']),
+    tech: z.array(z.string()),
   }),
 });
 
@@ -28,6 +30,8 @@ const movies = defineCollection({
     rating: z.number().min(1).max(5),
     review: z.string(),
     year: z.number(),
+    watched: z.string().regex(/^\d{4}-\d{2}$/).optional(), // "YYYY-MM"
+    status: z.enum(['watched', 'watching', 'want']).default('watched'),
   }),
 });
 
@@ -39,7 +43,17 @@ const books = defineCollection({
     rating: z.number().min(1).max(5),
     review: z.string(),
     author: z.string(),
+    status: z.enum(['reading', 'finished', 'want']).default('finished'),
   }),
 });
 
-export const collections = { about, contact, projects, movies, books };
+const blog = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.string(), // "YYYY-MM-DD"
+    summary: z.string(),
+  }),
+});
+
+export const collections = { about, contact, projects, movies, books, blog };

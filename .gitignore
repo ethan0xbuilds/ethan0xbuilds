@@ -4,3 +4,5 @@ dist/
 .npm-cache/
 src/env.d.ts
 .astro/
+.worktrees/
+node_modules

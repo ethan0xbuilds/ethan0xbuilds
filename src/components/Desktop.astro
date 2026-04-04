@@ -16,19 +16,50 @@ const aboutEntry = await getEntry('about', 'index');
 const contactEntry = await getEntry('contact', 'index');
 const { Content: AboutContent } = await aboutEntry.render();
 const { Content: ContactContent } = await contactEntry.render();
+const blogPosts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+const blogRendered = await Promise.all(
+  blogPosts.map(async post => {
+    const { Content } = await post.render();
+    return { id: post.id, Content };
+  })
+);
 ---
 
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ethan@desktop</title>
+  <title>Ethan Chen — Software Engineer</title>
+  <meta name="description" content="Ethan Chen is a software engineer with 6 years of experience in backend development, Go, Kubernetes, and OpenStack. Open source contributor." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ethan Chen — Software Engineer" />
+  <meta property="og:description" content="6 years backend experience · OpenStack · Go · Kubernetes · Open source contributor" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://me.oasaka.xyz" />
+  <meta property="og:image" content="https://me.oasaka.xyz/avatar.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@ethan0xbuilds" />
+  <meta name="twitter:title" content="Ethan Chen — Software Engineer" />
+  <meta name="twitter:description" content="6 years backend experience · OpenStack · Go · Kubernetes" />
+  <meta name="twitter:image" content="https://me.oasaka.xyz/avatar.png" />
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #0d1117;
+      background-color: #0d1117;
+      background-image:
+        radial-gradient(ellipse at 15% 60%, rgba(60, 40, 120, 0.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(20, 80, 120, 0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 90%, rgba(80, 20, 60, 0.35) 0%, transparent 45%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-attachment: fixed;
       font-family: 'JetBrains Mono', monospace;
       overflow: hidden;
       height: 100vh;
@@ -40,6 +71,55 @@ const { Content: ContactContent } = await contactEntry.render();
       margin-top: 28px;
       overflow: hidden;
     }
+    .desktop-icons {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 10;
+    }
+    .desktop-file-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+    .desktop-file-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .desktop-file-icon:focus-visible {
+      outline: 2px solid #7eb8f7;
+      outline-offset: 2px;
+    }
+    .file-icon-svg {
+      width: 48px;
+      height: 60px;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+    }
+    .file-icon-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+    .desktop-file-icon:hover .file-icon-label {
+      color: white;
+    }
+    @media (max-width: 768px) {
+      .desktop-icons { top: 8px; right: 10px; }
+      .file-icon-svg { width: 40px; height: 50px; }
+    }
+
     .desktop-bg {
       position: absolute;
       inset: 0;
@@ -78,6 +158,25 @@ const { Content: ContactContent } = await contactEntry.render();
       <div class="bg-tagline">Builder &amp; Tinkerer</div>
     </div>
 
+    <!-- Desktop file icons -->
+    <div class="desktop-icons">
+      <button
+        class="desktop-file-icon"
+        aria-label="Open Resume PDF"
+        onclick="(function(){import('/scripts/window-manager.js').then(m=>m.toggleWindow('resume'))})()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80" class="file-icon-svg">
+          <rect x="4" y="2" width="44" height="56" rx="4" ry="4" fill="#c75b39" opacity="0.9"/>
+          <path d="M48 2 L60 14 L48 14 Z" fill="#a34a2e"/>
+          <path d="M48 2 L48 14 L60 14" fill="none" stroke="#a34a2e" stroke-width="0"/>
+          <rect x="48" y="14" width="12" height="44" rx="0" ry="0" fill="#c75b39" opacity="0.75"/>
+          <path d="M48 2 L60 14 L48 14 Z" fill="rgba(0,0,0,0.15)"/>
+          <text x="30" y="42" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="white" opacity="0.95">PDF</text>
+        </svg>
+        <span class="file-icon-label">resume.pdf</span>
+      </button>
+    </div>
+
     <!-- About Window -->
     <Window id="about" title="about.md" defaultWidth={480} defaultHeight={420} defaultTop={80} defaultLeft={80}>
       <div class="about-profile">
@@ -90,30 +189,66 @@ const { Content: ContactContent } = await contactEntry.render();
     <Window id="projects" title="projects/" defaultWidth={520} defaultHeight={400} defaultTop={100} defaultLeft={160}>
       <div class="project-list">
         {projects.map(p => (
-          <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-row" aria-label={p.data.name}>
+          <div class="project-row">
             <span class="project-icon">{p.data.icon}</span>
-            <div>
-              <div class="project-name">{p.data.name}</div>
+            <div class="project-info">
+              <div class="project-name-row">
+                <span class="project-name">{p.data.name}</span>
+                <span class={`project-type project-type-${p.data.type}`}>{p.data.type}</span>
+                {p.data.url && (
+                  <a href={p.data.url} target="_blank" rel="noopener noreferrer" class="project-link" aria-label={`Open ${p.data.name} external link`}>
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  </a>
+                )}
+              </div>
               <div class="project-desc">{p.data.description}</div>
+              <div class="project-tech">
+                {p.data.tech.map(t => <span class="tech-tag">{t}</span>)}
+              </div>
             </div>
-          </a>
+          </div>
         ))}
       </div>
     </Window>
 
     <!-- Blog Window -->
-    <Window id="blog" title="blog/" defaultWidth={480} defaultHeight={320} defaultTop={120} defaultLeft={200}>
-      <div style="color: rgba(255,255,255,0.4); text-align:center; padding-top: 60px;">
-        <div style="font-size:32px; margin-bottom:12px;">🚧</div>
-        <div>Coming soon...</div>
+    <Window id="blog" title="blog/" defaultWidth={520} defaultHeight={380} defaultTop={120} defaultLeft={200}>
+      <div class="blog-list" id="blog-list">
+        {blogPosts.map(post => (
+          <button
+            class="blog-row"
+            data-post-id={post.id}
+            aria-label={post.data.title}
+          >
+            <span class="blog-date">{post.data.date}</span>
+            <span class="blog-title">{post.data.title}</span>
+          </button>
+        ))}
+      </div>
+      <div class="blog-detail" id="blog-detail" style="display:none;">
+        <button class="blog-back" id="blog-back">← back</button>
+        <div class="blog-post-content" id="blog-post-content"></div>
       </div>
     </Window>
 
+    <!-- Hidden rendered blog content for client-side navigation -->
+    <div style="display:none;" aria-hidden="true">
+      {blogRendered.map(({ id, Content }) => (
+        <div id={`blog-post-${id}`}><Content /></div>
+      ))}
+    </div>
+
     <!-- Movies Window -->
-    <Window id="movies" title="movies/" defaultWidth={580} defaultHeight={480} defaultTop={90} defaultLeft={140}>
-      <div class="media-grid">
+    <Window id="movies" title="movies.json" defaultWidth={580} defaultHeight={480} defaultTop={90} defaultLeft={140}>
+      <div class="books-filters">
+        <button class="filter-btn active" data-filter-grid="movies-grid" data-filter="all">all</button>
+        <button class="filter-btn" data-filter-grid="movies-grid" data-filter="watched">watched</button>
+        <button class="filter-btn" data-filter-grid="movies-grid" data-filter="watching">watching</button>
+        <button class="filter-btn" data-filter-grid="movies-grid" data-filter="want">want</button>
+      </div>
+      <div class="media-grid" id="movies-grid">
         {movies.sort((a, b) => b.data.year - a.data.year).map(m => (
-          <div class="media-card">
+          <div class="media-card" data-status={m.data.status}>
             {m.data.cover
               ? <img src={m.data.cover} alt={m.data.title} class="media-cover" />
               : <div class="media-placeholder">🎬</div>
@@ -122,6 +257,7 @@ const { Content: ContactContent } = await contactEntry.render();
               <div class="media-title">{m.data.title}</div>
               <div class="media-rating">{'★'.repeat(m.data.rating)}{'☆'.repeat(5 - m.data.rating)}</div>
               <div class="media-year">{m.data.year}</div>
+              <span class={`book-status book-status-${m.data.status}`}>{m.data.status}</span>
               <div class="media-review">{m.data.review}</div>
             </div>
           </div>
@@ -130,10 +266,16 @@ const { Content: ContactContent } = await contactEntry.render();
     </Window>
 
     <!-- Books Window -->
-    <Window id="books" title="books/" defaultWidth={580} defaultHeight={480} defaultTop={100} defaultLeft={160}>
-      <div class="media-grid">
+    <Window id="books" title="books.json" defaultWidth={580} defaultHeight={480} defaultTop={100} defaultLeft={160}>
+      <div class="books-filters">
+        <button class="filter-btn active" data-filter-grid="books-grid" data-filter="all">all</button>
+        <button class="filter-btn" data-filter-grid="books-grid" data-filter="reading">reading</button>
+        <button class="filter-btn" data-filter-grid="books-grid" data-filter="finished">finished</button>
+        <button class="filter-btn" data-filter-grid="books-grid" data-filter="want">want</button>
+      </div>
+      <div class="media-grid" id="books-grid">
         {books.map(b => (
-          <div class="media-card">
+          <div class="media-card" data-status={b.data.status}>
             {b.data.cover
               ? <img src={b.data.cover} alt={b.data.title} class="media-cover" />
               : <div class="media-placeholder">📖</div>
@@ -142,6 +284,7 @@ const { Content: ContactContent } = await contactEntry.render();
               <div class="media-title">{b.data.title}</div>
               <div class="media-rating">{'★'.repeat(b.data.rating)}{'☆'.repeat(5 - b.data.rating)}</div>
               <div class="media-author">{b.data.author}</div>
+              <span class={`book-status book-status-${b.data.status}`}>{b.data.status}</span>
               <div class="media-review">{b.data.review}</div>
             </div>
           </div>
@@ -153,6 +296,30 @@ const { Content: ContactContent } = await contactEntry.render();
     <Window id="contact" title="contact.md" defaultWidth={400} defaultHeight={280} defaultTop={110} defaultLeft={180}>
       <ContactContent />
     </Window>
+
+    <!-- Resume Window -->
+    <Window id="resume" title="resume.pdf" defaultWidth={700} defaultHeight={520} defaultTop={60} defaultLeft={120}>
+      <div class="resume-window">
+        <div class="resume-toolbar">
+          <span class="resume-hint">Ethan Chen — Software Engineer Resume</span>
+          <a
+            href="https://github.com/ethan0xbuilds/ethan0xbuilds/releases/download/resume_20260330/ethan_resume.pdf"
+            download="Ethan_Chen_Software_Engineer_Resume.pdf"
+            class="resume-download-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </a>
+        </div>
+        <iframe
+          src="https://docs.google.com/viewer?url=https%3A%2F%2Fgithub.com%2Fethan0xbuilds%2Fethan0xbuilds%2Freleases%2Fdownload%2Fresume_20260330%2Fethan_resume.pdf&embedded=true"
+          class="resume-iframe"
+          title="Ethan Chen Resume"
+        ></iframe>
+      </div>
+    </Window>
   </div>
 
   <Dock />
@@ -162,6 +329,74 @@ const { Content: ContactContent } = await contactEntry.render();
     initWindowManager();
     const autoOpen = document.getElementById('desktop')?.dataset.autoOpen;
     if (autoOpen) openWindow(autoOpen);
+
+    // Blog in-window navigation
+    let lastClickedRow = null;
+
+    document.querySelectorAll('.blog-row').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const list = document.getElementById('blog-list');
+        const detail = document.getElementById('blog-detail');
+        const content = document.getElementById('blog-post-content');
+        const postId = btn.dataset.postId;
+        const hidden = document.getElementById(`blog-post-${postId}`);
+        if (!hidden || !list || !detail || !content) return;
+        lastClickedRow = btn;
+        content.innerHTML = hidden.innerHTML;
+        const win = btn.closest('[id^="win-"]');
+        if (win) {
+          const titleEl = win.querySelector('.win-title');
+          if (titleEl) titleEl.textContent = `blog/${postId}.md`;
+        }
+        list.style.display = 'none';
+        detail.style.display = 'block';
+        document.getElementById('blog-back')?.focus();
+      });
+    });
+
+    document.getElementById('blog-back')?.addEventListener('click', () => {
+      const list = document.getElementById('blog-list');
+      const detail = document.getElementById('blog-detail');
+      const win = document.getElementById('win-blog');
+      if (!list || !detail) return;
+      list.style.display = '';
+      detail.style.display = 'none';
+      if (win) {
+        const titleEl = win.querySelector('.win-title');
+        if (titleEl) titleEl.textContent = 'blog/';
+      }
+      lastClickedRow?.focus();
+    });
+
+    // Reset blog to list view when window opens
+    function resetBlogWindow() {
+      const list = document.getElementById('blog-list');
+      const detail = document.getElementById('blog-detail');
+      const content = document.getElementById('blog-post-content');
+      const winTitle = document.querySelector('#win-blog .win-title');
+      if (list) list.style.display = '';
+      if (detail) detail.style.display = 'none';
+      if (content) content.innerHTML = '';
+      if (winTitle) winTitle.textContent = 'blog/';
+    }
+
+    document.getElementById('win-blog')?.addEventListener('animationstart', (e) => {
+      if (e.animationName === 'win-open') resetBlogWindow();
+    });
+
+    // Media filter (movies + books)
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const gridId = btn.dataset.filterGrid;
+        const group = btn.closest('.books-filters');
+        group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll(`#${gridId} .media-card`).forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
+        });
+      });
+    });
   </script>
 </body>
 </html>
@@ -182,43 +417,110 @@ const { Content: ContactContent } = await contactEntry.render();
     border: 2px solid rgba(126,184,247,0.4);
   }
 
-  /* About window markdown content */
-  .about-profile + * p:first-child {
-    font-size: 11px;
+  /* About tagline */
+  .about-profile + * > p:first-child {
+    font-size: 10px;
     font-weight: 600;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.14em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  /* About bio text */
+  .about-bio {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.7;
     margin-bottom: 16px;
   }
-  .about-profile + * strong {
-    color: #7eb8f7;
+
+  /* Neofetch block */
+  .neofetch {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 11px;
+  }
+  .nf-row { display: flex; margin-bottom: 3px; }
+  .nf-row:last-child { margin-bottom: 0; }
+  .nf-key {
+    color: #c75b39;
+    min-width: 90px;
     font-weight: 600;
   }
-  .about-profile + * p {
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    line-height: 1.8;
-    margin-bottom: 8px;
+  .nf-sep { color: rgba(255,255,255,0.3); margin-right: 8px; }
+  .nf-val { color: rgba(255,255,255,0.8); }
+
+  /* Highlight cards */
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+  }
+  .hl-card {
+    background: rgba(199, 91, 57, 0.1);
+    border: 1px solid rgba(199, 91, 57, 0.25);
+    border-radius: 6px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+  .hl-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: #c75b39;
+  }
+  .hl-label {
+    font-size: 9px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.3;
   }
 
-  .project-list { display: flex; flex-direction: column; gap: 12px; }
+  .project-list { display: flex; flex-direction: column; gap: 8px; }
   .project-row {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 10px;
     padding: 10px 12px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
     transition: background 0.15s ease;
   }
-  .project-row:hover { background: rgba(255,255,255,0.1); }
-  .project-row:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
-  .project-icon { font-size: 24px; }
-  .project-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 2px; }
-  .project-desc { font-size: 11px; color: rgba(255,255,255,0.5); }
+  .project-row:hover { background: rgba(255,255,255,0.08); }
+  .project-icon { font-size: 20px; margin-top: 2px; flex-shrink: 0; }
+  .project-info { flex: 1; min-width: 0; }
+  .project-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; flex-wrap: wrap; }
+  .project-name { font-size: 12px; font-weight: 600; color: #c75b39; }
+  .project-type {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .project-type-work { background: rgba(59,130,246,0.2); color: #7eb8f7; border: 1px solid rgba(59,130,246,0.3); }
+  .project-type-oss  { background: rgba(34,197,94,0.2);  color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+  .project-type-side { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+  .project-link { color: rgba(255,255,255,0.4); display: flex; align-items: center; margin-left: auto; text-decoration: none; }
+  .project-link:hover { color: #c75b39; }
+  .project-link:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; border-radius: 2px; }
+  .project-desc { font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.5; margin-bottom: 5px; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tech-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px;
+    color: rgba(255,255,255,0.5);
+  }
 
   .media-grid {
     display: grid;
@@ -251,4 +553,164 @@ const { Content: ContactContent } = await contactEntry.render();
   .media-rating { font-size: 11px; color: rgba(255,200,80,0.9); margin-bottom: 2px; }
   .media-year, .media-author { font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
   .media-review { font-size: 10px; color: rgba(255,255,255,0.6); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .blog-list { display: flex; flex-direction: column; }
+  .blog-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .blog-row:last-child { border-bottom: none; }
+  .blog-date { font-size: 11px; color: rgba(255,255,255,0.35); min-width: 90px; flex-shrink: 0; }
+  .blog-title { font-size: 12px; color: rgba(255,255,255,0.8); transition: color 0.15s; }
+  .blog-row:hover .blog-title { color: #c75b39; }
+  .blog-row:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .blog-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0 0 12px 0;
+    transition: color 0.15s;
+  }
+  .blog-back:hover { color: #c75b39; }
+  .blog-back:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .blog-post-content { font-size: 13px; line-height: 1.8; color: rgba(255,255,255,0.8); }
+  .blog-post-content h1, .blog-post-content h2 {
+    color: white;
+    margin: 16px 0 8px;
+    font-size: 14px;
+  }
+  .blog-post-content p { margin-bottom: 10px; }
+  .blog-post-content code {
+    background: rgba(255,255,255,0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+  }
+  .blog-post-content ol, .blog-post-content ul { padding-left: 20px; margin-bottom: 10px; }
+  .blog-post-content li { margin-bottom: 4px; }
+
+  .contact-list { margin-bottom: 20px; }
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .contact-key {
+    color: #c75b39;
+    min-width: 80px;
+    font-weight: 600;
+  }
+  .contact-sep { color: rgba(255,255,255,0.3); margin-right: 12px; }
+  .contact-val { color: rgba(255,255,255,0.8); }
+  .contact-link {
+    color: #7eb8f7;
+    text-decoration: none;
+    transition: color 0.15s, text-decoration 0.15s;
+  }
+  .contact-link:hover { color: #c75b39; text-decoration: underline; }
+  .contact-link:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .contact-echo {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+  }
+  .books-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .filter-btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: rgba(199,91,57,0.2);
+    border-color: rgba(199,91,57,0.4);
+    color: #c75b39;
+  }
+  .filter-btn:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .book-status {
+    display: inline-block;
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .book-status-reading  { background: rgba(251,191,36,0.2); color: #fbbf24; }
+  .book-status-finished { background: rgba(34,197,94,0.2);  color: #4ade80; }
+  .book-status-want     { background: rgba(168,85,247,0.2); color: #c084fc; }
+  .book-status-watched  { background: rgba(34,197,94,0.2);  color: #4ade80; }
+  .book-status-watching { background: rgba(251,191,36,0.2); color: #fbbf24; }
+
+  .resume-window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: -20px;
+  }
+  .resume-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .resume-hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+  .resume-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #7eb8f7;
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid rgba(126,184,247,0.3);
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .resume-download-btn:hover {
+    background: rgba(126,184,247,0.1);
+    color: white;
+  }
+  .resume-download-btn:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .resume-iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: #fff;
+  }
 </style>
