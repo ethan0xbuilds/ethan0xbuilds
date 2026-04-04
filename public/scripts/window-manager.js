@@ -40,7 +40,8 @@ export function closeWindow(id) {
   const win = document.getElementById(`win-${id}`);
   if (!win || win.classList.contains('win-hidden') || win.classList.contains('win-closing')) return;
   win.classList.add('win-closing');
-  win.addEventListener('animationend', () => {
+
+  function finish() {
     win.classList.add('win-hidden');
     win.classList.remove('win-closing');
     win.classList.remove('win-focused');
@@ -50,7 +51,16 @@ export function closeWindow(id) {
     const openWindows = [...document.querySelectorAll('.window:not(.win-hidden)')];
     if (openWindows.length === 0) history.pushState({}, '', '/');
     updateDockIndicators();
-  }, { once: true });
+  }
+
+  // On mobile, win-closing has no animation — animationend never fires.
+  // Check if an animation is actually running; if not, finish immediately.
+  const animName = window.getComputedStyle(win).animationName;
+  if (!animName || animName === 'none') {
+    finish();
+  } else {
+    win.addEventListener('animationend', finish, { once: true });
+  }
 }
 
 /** Toggle minimize: hide if visible, show if hidden */
