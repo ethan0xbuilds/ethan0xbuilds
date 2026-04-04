@@ -57,6 +57,11 @@ const {
   overflow: hidden;
   min-width: 280px;
   min-height: 200px;
+  filter: brightness(0.75);
+  transition: filter 0.15s ease;
+}
+.window.win-focused {
+  filter: brightness(1);
 }
 .win-hidden { display: none; }
 
@@ -79,9 +84,12 @@ const {
   cursor: pointer;
   padding: 0;
 }
-.win-btn-close  { background: #ff5f57; }
-.win-btn-minimize { background: #febc2e; }
-.win-btn-maximize { background: #28c840; }
+.window .win-btn-close    { background: #6b6b6b; }
+.window .win-btn-minimize { background: #6b6b6b; }
+.window .win-btn-maximize { background: #6b6b6b; }
+.window.win-focused .win-btn-close    { background: #ff5f57; }
+.window.win-focused .win-btn-minimize { background: #febc2e; }
+.window.win-focused .win-btn-maximize { background: #28c840; }
 .win-btn:disabled { opacity: 0.4; cursor: default; }
 
 .win-title {

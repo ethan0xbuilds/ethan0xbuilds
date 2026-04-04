@@ -3,9 +3,19 @@
 
 let zCounter = 100;
 
+function blurAllWindows() {
+  document.querySelectorAll('.window').forEach(w => w.classList.remove('win-focused'));
+}
+
+function focusWindow(winEl) {
+  blurAllWindows();
+  winEl.classList.add('win-focused');
+}
+
 /** Bring a window element to front */
 function bringToFront(winEl) {
   winEl.style.zIndex = ++zCounter;
+  focusWindow(winEl);
 }
 
 /** Open a window by id, or focus it if already open */
