@@ -4,4 +4,5 @@ rating: 5
 review: "三小时没出戏，诺兰的信息密度真的没话说"
 year: 2023
 watched: "2024-01"
+status: "watched"
 ---

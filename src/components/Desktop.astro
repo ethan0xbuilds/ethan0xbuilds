@@ -171,10 +171,16 @@ const blogRendered = await Promise.all(
     </div>
 
     <!-- Movies Window -->
-    <Window id="movies" title="movies/" defaultWidth={580} defaultHeight={480} defaultTop={90} defaultLeft={140}>
-      <div class="media-grid">
+    <Window id="movies" title="movies.json" defaultWidth={580} defaultHeight={480} defaultTop={90} defaultLeft={140}>
+      <div class="books-filters">
+        <button class="filter-btn active" data-filter-grid="movies-grid" data-filter="all">all</button>
+        <button class="filter-btn" data-filter-grid="movies-grid" data-filter="watched">watched</button>
+        <button class="filter-btn" data-filter-grid="movies-grid" data-filter="watching">watching</button>
+        <button class="filter-btn" data-filter-grid="movies-grid" data-filter="want">want</button>
+      </div>
+      <div class="media-grid" id="movies-grid">
         {movies.sort((a, b) => b.data.year - a.data.year).map(m => (
-          <div class="media-card">
+          <div class="media-card" data-status={m.data.status}>
             {m.data.cover
               ? <img src={m.data.cover} alt={m.data.title} class="media-cover" />
               : <div class="media-placeholder">🎬</div>
@@ -183,6 +189,7 @@ const blogRendered = await Promise.all(
               <div class="media-title">{m.data.title}</div>
               <div class="media-rating">{'★'.repeat(m.data.rating)}{'☆'.repeat(5 - m.data.rating)}</div>
               <div class="media-year">{m.data.year}</div>
+              <span class={`book-status book-status-${m.data.status}`}>{m.data.status}</span>
               <div class="media-review">{m.data.review}</div>
             </div>
           </div>
@@ -193,10 +200,10 @@ const blogRendered = await Promise.all(
     <!-- Books Window -->
     <Window id="books" title="books.json" defaultWidth={580} defaultHeight={480} defaultTop={100} defaultLeft={160}>
       <div class="books-filters">
-        <button class="filter-btn active" data-filter="all">all</button>
-        <button class="filter-btn" data-filter="reading">reading</button>
-        <button class="filter-btn" data-filter="finished">finished</button>
-        <button class="filter-btn" data-filter="want">want</button>
+        <button class="filter-btn active" data-filter-grid="books-grid" data-filter="all">all</button>
+        <button class="filter-btn" data-filter-grid="books-grid" data-filter="reading">reading</button>
+        <button class="filter-btn" data-filter-grid="books-grid" data-filter="finished">finished</button>
+        <button class="filter-btn" data-filter-grid="books-grid" data-filter="want">want</button>
       </div>
       <div class="media-grid" id="books-grid">
         {books.map(b => (
@@ -285,14 +292,15 @@ const blogRendered = await Promise.all(
       if (e.animationName === 'win-open') resetBlogWindow();
     });
 
-    // Books status filter
+    // Media filter (movies + books)
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
+        const gridId = btn.dataset.filterGrid;
         const group = btn.closest('.books-filters');
         group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filter = btn.dataset.filter;
-        document.querySelectorAll('#books-grid .media-card').forEach(card => {
+        document.querySelectorAll(`#${gridId} .media-card`).forEach(card => {
           card.style.display = (filter === 'all' || card.dataset.status === filter) ? '' : 'none';
         });
       });
@@ -568,4 +576,6 @@ const blogRendered = await Promise.all(
   .book-status-reading  { background: rgba(251,191,36,0.2); color: #fbbf24; }
   .book-status-finished { background: rgba(34,197,94,0.2);  color: #4ade80; }
   .book-status-want     { background: rgba(168,85,247,0.2); color: #c084fc; }
+  .book-status-watched  { background: rgba(34,197,94,0.2);  color: #4ade80; }
+  .book-status-watching { background: rgba(251,191,36,0.2); color: #fbbf24; }
 </style>

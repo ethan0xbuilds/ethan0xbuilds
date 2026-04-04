@@ -31,6 +31,7 @@ const movies = defineCollection({
     review: z.string(),
     year: z.number(),
     watched: z.string().regex(/^\d{4}-\d{2}$/).optional(), // "YYYY-MM"
+    status: z.enum(['watched', 'watching', 'want']).default('watched'),
   }),
 });
 
