@@ -228,6 +228,30 @@ const blogRendered = await Promise.all(
     <Window id="contact" title="contact.md" defaultWidth={400} defaultHeight={280} defaultTop={110} defaultLeft={180}>
       <ContactContent />
     </Window>
+
+    <!-- Resume Window -->
+    <Window id="resume" title="resume.pdf" defaultWidth={700} defaultHeight={520} defaultTop={60} defaultLeft={120}>
+      <div class="resume-window">
+        <div class="resume-toolbar">
+          <span class="resume-hint">Ethan Chen — Software Engineer Resume</span>
+          <a
+            href="https://github.com/ethan0xbuilds/ethan0xbuilds/releases/download/resume_20260330/ethan_resume.pdf"
+            download="Ethan_Chen_Software_Engineer_Resume.pdf"
+            class="resume-download-btn"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </a>
+        </div>
+        <iframe
+          src="https://github.com/ethan0xbuilds/ethan0xbuilds/releases/download/resume_20260330/ethan_resume.pdf"
+          class="resume-iframe"
+          title="Ethan Chen Resume"
+        ></iframe>
+      </div>
+    </Window>
   </div>
 
   <Dock />
@@ -578,4 +602,47 @@ const blogRendered = await Promise.all(
   .book-status-want     { background: rgba(168,85,247,0.2); color: #c084fc; }
   .book-status-watched  { background: rgba(34,197,94,0.2);  color: #4ade80; }
   .book-status-watching { background: rgba(251,191,36,0.2); color: #fbbf24; }
+
+  .resume-window {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: -20px;
+  }
+  .resume-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  .resume-hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+  }
+  .resume-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #7eb8f7;
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid rgba(126,184,247,0.3);
+    border-radius: 4px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .resume-download-btn:hover {
+    background: rgba(126,184,247,0.1);
+    color: white;
+  }
+  .resume-download-btn:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .resume-iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: #fff;
+  }
 </style>
