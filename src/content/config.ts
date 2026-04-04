@@ -30,7 +30,7 @@ const movies = defineCollection({
     rating: z.number().min(1).max(5),
     review: z.string(),
     year: z.number(),
-    watched: z.string(), // "YYYY-MM"
+    watched: z.string().regex(/^\d{4}-\d{2}$/).optional(), // "YYYY-MM"
   }),
 });
 

@@ -287,7 +287,8 @@ const blogRendered = await Promise.all(
     // Books status filter
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        const group = btn.closest('.books-filters');
+        group?.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filter = btn.dataset.filter;
         document.querySelectorAll('#books-grid .media-card').forEach(card => {
