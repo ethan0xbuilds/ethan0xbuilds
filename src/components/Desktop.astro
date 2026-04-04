@@ -470,4 +470,32 @@ const blogRendered = await Promise.all(
   }
   .blog-post-content ol, .blog-post-content ul { padding-left: 20px; margin-bottom: 10px; }
   .blog-post-content li { margin-bottom: 4px; }
+
+  .contact-list { margin-bottom: 20px; }
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .contact-key {
+    color: #c75b39;
+    min-width: 80px;
+    font-weight: 600;
+  }
+  .contact-sep { color: rgba(255,255,255,0.3); margin-right: 12px; }
+  .contact-val { color: rgba(255,255,255,0.8); }
+  .contact-link {
+    color: #7eb8f7;
+    text-decoration: none;
+    transition: color 0.15s, text-decoration 0.15s;
+  }
+  .contact-link:hover { color: #c75b39; text-decoration: underline; }
+  .contact-link:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .contact-echo {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+  }
 </style>
