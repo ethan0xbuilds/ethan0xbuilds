@@ -6,3 +6,4 @@ src/env.d.ts
 .astro/
 .worktrees/
 node_modules
+.playwright-mcp/
