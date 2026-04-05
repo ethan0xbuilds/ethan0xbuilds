@@ -1,6 +1,6 @@
 ---
 title: "沐浴之王"
-cover: "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2627788612.webp"
+cover: "https://upload.wikimedia.org/wikipedia/zh/5/55/Bath_Buddy.jpg"
 rating: 4
 review: "待填写"
 year: 2020
