@@ -13,9 +13,7 @@ const projects = await getCollection('projects');
 const movies = await getCollection('movies');
 const books = await getCollection('books');
 const aboutEntry = await getEntry('about', 'index');
-const contactEntry = await getEntry('contact', 'index');
 const { Content: AboutContent } = await aboutEntry.render();
-const { Content: ContactContent } = await contactEntry.render();
 const blogPosts = (await getCollection('blog')).sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
@@ -176,13 +174,24 @@ const blogRendered = await Promise.all(
         </svg>
         <span class="file-icon-label">resume.pdf</span>
       </button>
+      <button
+        class="desktop-file-icon"
+        aria-label="Open about.md"
+        onclick="(function(){import('/scripts/window-manager.js').then(m=>m.toggleWindow('about'))})()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 80" class="file-icon-svg">
+          <rect x="4" y="2" width="44" height="56" rx="4" ry="4" fill="#3b6ea5" opacity="0.9"/>
+          <path d="M48 2 L60 14 L48 14 Z" fill="#2d5580"/>
+          <rect x="48" y="14" width="12" height="44" rx="0" ry="0" fill="#3b6ea5" opacity="0.75"/>
+          <path d="M48 2 L60 14 L48 14 Z" fill="rgba(0,0,0,0.15)"/>
+          <text x="30" y="38" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" fill="white" opacity="0.95">MD</text>
+        </svg>
+        <span class="file-icon-label">about.md</span>
+      </button>
     </div>
 
     <!-- About Window -->
-    <Window id="about" title="about.md" defaultWidth={480} defaultHeight={420} defaultTop={80} defaultLeft={80}>
-      <div class="about-profile">
-        <img src="/avatar.png" alt="ethan" class="about-avatar" />
-      </div>
+    <Window id="about" title="about.md" defaultWidth={400} defaultHeight={280} defaultTop={80} defaultLeft={80}>
       <AboutContent />
     </Window>
 
@@ -297,11 +306,6 @@ const blogRendered = await Promise.all(
           </div>
         ))}
       </div>
-    </Window>
-
-    <!-- Contact Window -->
-    <Window id="contact" title="contact.md" defaultWidth={400} defaultHeight={280} defaultTop={110} defaultLeft={180}>
-      <ContactContent />
     </Window>
 
     <!-- Resume Window -->
@@ -427,83 +431,14 @@ const blogRendered = await Promise.all(
 </html>
 
 <style is:global>
-  .about-profile {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-  }
-  .about-avatar {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgba(126,184,247,0.4);
-  }
-
   /* About tagline */
-  .about-profile + * > p:first-child {
+  #win-about .win-body > p:first-child {
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.14em;
     color: rgba(255,255,255,0.45);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-  /* About bio text */
-  .about-bio {
-    font-size: 12px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.7;
     margin-bottom: 16px;
-  }
-
-  /* Neofetch block */
-  .neofetch {
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 6px;
-    padding: 10px 14px;
-    margin-bottom: 14px;
-    font-size: 11px;
-  }
-  .nf-row { display: flex; margin-bottom: 3px; }
-  .nf-row:last-child { margin-bottom: 0; }
-  .nf-key {
-    color: #c75b39;
-    min-width: 90px;
-    font-weight: 600;
-  }
-  .nf-sep { color: rgba(255,255,255,0.3); margin-right: 8px; }
-  .nf-val { color: rgba(255,255,255,0.8); }
-
-  /* Highlight cards */
-  .highlights {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 8px;
-  }
-  .hl-card {
-    background: rgba(199, 91, 57, 0.1);
-    border: 1px solid rgba(199, 91, 57, 0.25);
-    border-radius: 6px;
-    padding: 10px 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    text-align: center;
-  }
-  .hl-num {
-    font-size: 18px;
-    font-weight: 700;
-    color: #c75b39;
-  }
-  .hl-label {
-    font-size: 9px;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.3;
+    text-transform: uppercase;
   }
 
   .project-list { display: flex; flex-direction: column; gap: 8px; }

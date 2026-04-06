@@ -5,11 +5,6 @@ const about = defineCollection({
   schema: z.object({}),
 });
 
-const contact = defineCollection({
-  type: 'content',
-  schema: z.object({}),
-});
-
 const projects = defineCollection({
   type: 'content',
   schema: z.object({
@@ -57,4 +52,4 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { about, contact, projects, movies, books, blog };
+export const collections = { about, projects, movies, books, blog };
