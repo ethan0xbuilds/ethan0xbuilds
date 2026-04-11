@@ -188,6 +188,19 @@ const blogRendered = await Promise.all(
         </svg>
         <span class="file-icon-label">about.md</span>
       </button>
+      <button
+        class="desktop-file-icon"
+        aria-label="Open photos folder"
+        onclick="(function(){import('/scripts/window-manager.js').then(m=>m.toggleWindow('photos'))})()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 56" class="file-icon-svg" style="height:52px;">
+          <path d="M4 14 Q4 10 8 10 L22 10 Q24 10 25 12 L28 16 L56 16 Q60 16 60 20 L60 50 Q60 54 56 54 L8 54 Q4 54 4 50 Z" fill="#5b9bd5" opacity="0.9"/>
+          <path d="M4 14 Q4 10 8 10 L22 10 Q24 10 25 12 L28 16 L4 16 Z" fill="#4a87c0"/>
+          <rect x="4" y="16" width="56" height="38" rx="0" ry="0" fill="#5b9bd5" opacity="0.85"/>
+          <path d="M4 20 L60 20" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        </svg>
+        <span class="file-icon-label">photos/</span>
+      </button>
     </div>
 
     <!-- About Window -->
@@ -308,6 +321,27 @@ const blogRendered = await Promise.all(
       </div>
     </Window>
 
+    <!-- Photos Window -->
+    <Window id="photos" title="photos/" defaultWidth={580} defaultHeight={420} defaultTop={80} defaultLeft={100}>
+      <div class="photos-grid" id="photos-grid">
+        {[
+          { src: 'https://cdn.jsdelivr.net/gh/ethan0xbuilds/ethan0xbuilds-assets@main/photos/Desktop.png', alt: 'Desktop' },
+          { src: 'https://cdn.jsdelivr.net/gh/ethan0xbuilds/ethan0xbuilds-assets@main/photos/LakeCoding.png', alt: 'Lake Coding' },
+          { src: 'https://cdn.jsdelivr.net/gh/ethan0xbuilds/ethan0xbuilds-assets@main/photos/MacBook.png', alt: 'MacBook' },
+        ].map(photo => (
+          <button class="photo-thumb" aria-label={`View ${photo.alt}`} data-src={photo.src} data-alt={photo.alt}>
+            <img src={photo.src} alt={photo.alt} loading="lazy" />
+          </button>
+        ))}
+      </div>
+      <div class="photo-lightbox" id="photo-lightbox" style="display:none;">
+        <button class="photo-back" id="photo-back">← back</button>
+        <div class="photo-full-wrap">
+          <img id="photo-full-img" src="" alt="" />
+        </div>
+      </div>
+    </Window>
+
     <!-- Resume Window -->
     <Window id="resume" title="resume.pdf" defaultWidth={700} defaultHeight={520} defaultTop={60} defaultLeft={120}>
       <div class="resume-window">
@@ -410,6 +444,56 @@ const blogRendered = await Promise.all(
           row.style.display = (filter === 'all' || row.dataset.category === filter) ? '' : 'none';
         });
       });
+    });
+
+    // Photos lightbox
+    let lastClickedThumb = null;
+    document.querySelectorAll('.photo-thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const grid = document.getElementById('photos-grid');
+        const lightbox = document.getElementById('photo-lightbox');
+        const img = document.getElementById('photo-full-img');
+        if (!grid || !lightbox || !img) return;
+        lastClickedThumb = btn;
+        img.src = btn.dataset.src;
+        img.alt = btn.dataset.alt;
+        grid.style.display = 'none';
+        lightbox.style.display = 'flex';
+        document.getElementById('photo-back')?.focus();
+        const win = btn.closest('[id^="win-"]');
+        if (win) {
+          const titleEl = win.querySelector('.win-title');
+          if (titleEl) titleEl.textContent = `photos/${btn.dataset.alt}`;
+        }
+      });
+    });
+
+    document.getElementById('photo-back')?.addEventListener('click', () => {
+      const grid = document.getElementById('photos-grid');
+      const lightbox = document.getElementById('photo-lightbox');
+      const win = document.getElementById('win-photos');
+      if (!grid || !lightbox) return;
+      grid.style.display = '';
+      lightbox.style.display = 'none';
+      if (win) {
+        const titleEl = win.querySelector('.win-title');
+        if (titleEl) titleEl.textContent = 'photos/';
+      }
+      lastClickedThumb?.focus();
+    });
+
+    document.getElementById('win-photos')?.addEventListener('animationstart', (e) => {
+      if (e.animationName === 'win-open') {
+        const grid = document.getElementById('photos-grid');
+        const lightbox = document.getElementById('photo-lightbox');
+        const win = document.getElementById('win-photos');
+        if (grid) grid.style.display = '';
+        if (lightbox) lightbox.style.display = 'none';
+        if (win) {
+          const titleEl = win.querySelector('.win-title');
+          if (titleEl) titleEl.textContent = 'photos/';
+        }
+      }
     });
 
     // Media filter (movies + books)
@@ -630,6 +714,65 @@ const blogRendered = await Promise.all(
   .book-status-want     { background: rgba(168,85,247,0.2); color: #c084fc; }
   .book-status-watched  { background: rgba(34,197,94,0.2);  color: #4ade80; }
   .book-status-watching { background: rgba(251,191,36,0.2); color: #fbbf24; }
+
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .photo-thumb {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 0;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .photo-thumb:hover {
+    border-color: rgba(255,255,255,0.25);
+    transform: scale(1.02);
+  }
+  .photo-thumb:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .photo-thumb img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-lightbox {
+    flex-direction: column;
+    height: 100%;
+  }
+  .photo-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0 0 12px 0;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .photo-back:hover { color: #c75b39; }
+  .photo-back:focus-visible { outline: 2px solid #7eb8f7; outline-offset: 2px; }
+  .photo-full-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .photo-full-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+  }
 
   .resume-window {
     display: flex;
